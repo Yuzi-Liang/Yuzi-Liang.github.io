@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Stock Price Forecast Based on Monte Carlo Method and Machine Learning - Yuzi Liang | University of Science and Technology of China</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Yuzi Liang | University of Science and Technology of China"><meta name="msapplication-TileImage" content="/img/favicon2.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Yuzi Liang | University of Science and Technology of China"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="A project for Computational Physics with my roommate Xinxiang You. February.20.2020-March.24.2020   1.Why We Choose This Topic 2.Algorithm Introduction 1.Get Stock Data 2.Data Processing 3.Deploy to S"><meta property="og:type" content="blog"><meta property="og:title" content="Stock Price Forecast Based on Monte Carlo Method and Machine Learning"><meta property="og:url" content="http://example.com/2021/03/23/stock-price-forecast-based-on-Monte-Carlo-method-and-machine-learning/"><meta property="og:site_name" content="Yuzi Liang | University of Science and Technology of China"><meta property="og:description" content="A project for Computational Physics with my roommate Xinxiang You. February.20.2020-March.24.2020   1.Why We Choose This Topic 2.Algorithm Introduction 1.Get Stock Data 2.Data Processing 3.Deploy to S"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/.com//you1.jpg"><meta property="og:image" content="http://example.com/.com//you2.jpg"><meta property="og:image" content="http://example.com/.com//you4.jpg"><meta property="og:image" content="http://example.com/.com//you5.jpg"><meta property="og:image" content="http://example.com/.com//1.jpg"><meta property="og:image" content="http://example.com/.com//2.jpg"><meta property="og:image" content="http://example.com/.com//3.jpg"><meta property="og:image" content="http://example.com/.com//4.jpg"><meta property="og:image" content="http://example.com/.com//lstm.png"><meta property="og:image" content="http://example.com/.com//l1.png"><meta property="og:image" content="http://example.com/.com//l2.png"><meta property="og:image" content="http://example.com/.com//l3.png"><meta property="og:image" content="http://example.com/.com//l4.png"><meta property="article:published_time" content="2021-03-23T21:14:43.000Z"><meta property="article:modified_time" content="2021-03-29T09:58:24.104Z"><meta property="article:author" content="Yuzi Liang"><meta property="article:tag" content="Machine Learning"><meta property="article:tag" content="Monte Carlo Method"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/.com//you1.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2021/03/23/stock-price-forecast-based-on-Monte-Carlo-method-and-machine-learning/"},"headline":"Yuzi Liang | University of Science and Technology of China","image":["http://example.com/.com//you1.jpg","http://example.com/.com//you2.jpg","http://example.com/.com//you4.jpg","http://example.com/.com//you5.jpg","http://example.com/.com//1.jpg","http://example.com/.com//2.jpg","http://example.com/.com//3.jpg","http://example.com/.com//4.jpg","http://example.com/.com//lstm.png","http://example.com/.com//l1.png","http://example.com/.com//l2.png","http://example.com/.com//l3.png","http://example.com/.com//l4.png"],"datePublished":"2021-03-23T21:14:43.000Z","dateModified":"2021-03-29T09:58:24.104Z","author":{"@type":"Person","name":"Yuzi Liang"},"description":"A project for Computational Physics with my roommate Xinxiang You. February.20.2020-March.24.2020   1.Why We Choose This Topic 2.Algorithm Introduction 1.Get Stock Data 2.Data Processing 3.Deploy to S"}</script><link rel="canonical" href="http://example.com/2021/03/23/stock-price-forecast-based-on-Monte-Carlo-method-and-machine-learning/"><link rel="icon" href="/img/favicon2.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-03-23T21:14:43.000Z" title="3/23/2021, 2:14:43 PM">2021-03-23</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-03-29T09:58:24.104Z" title="3/29/2021, 2:58:24 AM">2021-03-29</time></span><span class="level-item"><a class="link-muted" href="/categories/Project-Summary/">Project Summary</a></span><span class="level-item">6 minutes read (About 964 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">Stock Price Forecast Based on Monte Carlo Method and Machine Learning</h1><div class="content"><p>A project for Computational Physics with my roommate Xinxiang You.</p>
+<p><span style="color:Gray">February.20.2020-March.24.2020</span></p>
+<!-- toc -->
+<ul>
+<li><a href="#1why-we-choose-this-topic">1.Why We Choose This Topic</a></li>
+<li><a href="#2algorithm-introduction">2.Algorithm Introduction</a><ul>
+<li><a href="#1get-stock-data">1.Get Stock Data</a></li>
+<li><a href="#2data-processing">2.Data Processing</a></li>
+<li><a href="#3deploy-to-server">3.Deploy to Server</a><ul>
+<li><a href="#installation-of-python">Installation of Python</a></li>
+<li><a href="#installation-of-nginx">Installation of Nginx</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3result-presentation">3.Result presentation</a><ul>
+<li><a href="#code-600837ss-m-1000-n-100">code = ‘600837.ss’ , M = 1000 , N =100</a></li>
+<li><a href="#code-600519ss-m-1000-n-100">code = ‘600519.ss’ , M = 1000 , N =100</a></li>
+</ul>
+</li>
+<li><a href="#4lstm">4.LSTM</a><ul>
+<li><a href="#code-600519ss-epochs-300">code = ‘600519.ss’ , epochs = 300</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h2><span id="1why-we-choose-this-topic">1.Why We Choose This Topic</span></h2><p>In 2020, many young people begin to enter the stock, fund market, most have not studied the relevant professional knowledge. These choices based on chance and luck are often unreliable, so we’re going to use computational physics to simulate the future stock price roughly, to provide reference. We also rent Ali ECS cloud server to implement a web API, trying to achieve the function of user interaction, Which means we can provide the server for every user.</p>
+<p>The program are mostly implemented with Python.</p>
+<h2><span id="2algorithm-introduction">2.Algorithm Introduction</span></h2><h3><span id="1get-stock-data">1.Get Stock Data</span></h3><p>We use the yahoo API to get the previous stock data according to the stock code, the function is:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_csvsave = web.DataReader(<span class="string">&#x27;600837.ss&#x27;</span>, <span class="string">&#x27;yahoo&#x27;</span>, datetime.datetime(<span class="number">2019</span>,<span class="number">1</span>,<span class="number">1</span>), datetime.date.today())</span><br></pre></td></tr></table></figure>
+<p>The first parameter 600837.ss is the stock code of Haitong Securities, we can easily get any other stock data by changing the input of stock code.</p>
+<p>The second parameter means we use the API of yahoo.</p>
+<p>The third and fourth parameters specify the acquisition date is from 2019.1.1 to today.</p>
+<h3><span id="2data-processing">2.Data Processing</span></h3><p>The specific formula of Monte Carlo simulation is:</p>
+<script type="math/tex; mode=display">
+\frac{\Delta S}{S}=\mu \Delta t +\sigma \epsilon \sqrt{\Delta t}</script><p>$S$ is the initial stock price, $\Delta S$ is the change of the initial price, $\mu$ is expected yield, $\sigma$ is stock risk, can be replaced by the standard deviation. All of them can calculate from history data of the stock.</p>
+<p> $\epsilon$ is a random variable that satisfy a normal distribution in [0,1].</p>
+<p>Stock price of the $N$th day Can be predicted according to the formula below:</p>
+<script type="math/tex; mode=display">
+S_{N}=S_{0}+S_0 (\mu N+\sigma \epsilon \sqrt{N} )</script><p>In the real simulation, we use parameter $M$ to represent the number of simulation, Simply Use the average of these simulation result to predict the stock price of $N$th day.</p>
+<p>The key function is down below, start_price represent to the stock price of today, drift is $S_0 \mu N$, shock is  $S_0 \sigma \epsilon \sqrt{N}$, $N$ is the number of days. The final results are saved in the list data_new[].</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Mon_carluo</span>(<span class="params">start_price,drift,shock,N</span>):</span></span><br><span class="line">data_new=[]</span><br><span class="line">pi=start_price</span><br><span class="line">data_new.append(pi)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,N):</span><br><span class="line">	a=drift+random.normal(drift,shock)</span><br><span class="line">       <span class="keyword">if</span> a&gt;<span class="number">0.1</span>:         <span class="comment">#Chinese stocks are not allowed to rise or fall more than 10%</span></span><br><span class="line">           pi=pi+pi*<span class="number">0.1</span></span><br><span class="line">           data_new.append(pi)</span><br><span class="line">       <span class="keyword">elif</span> a&lt;-<span class="number">0.1</span>:</span><br><span class="line">           pi=pi-pi*<span class="number">0.1</span></span><br><span class="line">           data_new.append(pi)</span><br><span class="line">       <span class="keyword">else</span>:</span><br><span class="line">           pi=pi+pi*a</span><br><span class="line">           data_new.append(pi)</span><br><span class="line">   <span class="keyword">return</span> data_new</span><br></pre></td></tr></table></figure>
+<p>Improvement of algorithm:</p>
+<p>General when absolute value of yield is larger, the yield over the next few days will be a big up and downs, which means the past few days had a greater influence on absolute value of yield, and the yield has little to do with the stock price long ago.</p>
+<p> We added the predicted data to historical data to make predictions, and fixed the number of historical data unchanged.</p>
+<p> The code is shown below:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Mon_carluo</span>(<span class="params">data,M,LEN</span>):</span> <span class="comment">#Monte Carlo simulation for the next one day, number of simulation is M, return list of yield</span></span><br><span class="line">    <span class="built_in">sum</span>=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,M): </span><br><span class="line">        <span class="keyword">if</span> pan_duan(data):</span><br><span class="line">            dt = <span class="number">1</span>/DAYS</span><br><span class="line">            sigma=np.std(data[<span class="built_in">len</span>(data)-<span class="number">7</span>:<span class="built_in">len</span>(data)],ddof=<span class="number">1</span>)<span class="comment">#sigma: standard deviation, replace of stock risk</span></span><br><span class="line">            mu=np.mean(data[<span class="built_in">len</span>(data)-<span class="number">7</span>:<span class="built_in">len</span>(data)])</span><br><span class="line">            shock=sigma*np.sqrt(dt)</span><br><span class="line">            drift=mu*dt</span><br><span class="line">            a=drift+random.normal(drift,shock)</span><br><span class="line">    <span class="keyword">else</span>:   </span><br><span class="line">        days=<span class="built_in">len</span>(data)</span><br><span class="line">        dt = <span class="number">1</span>/LEN</span><br><span class="line">        sigma=np.std(data[<span class="built_in">len</span>(data)-LEN:<span class="built_in">len</span>(data)],ddof=<span class="number">1</span>)<span class="comment">#sigma: standard deviation, replace of stock risk</span></span><br><span class="line">        mu=np.mean(data[<span class="built_in">len</span>(data)-LEN:<span class="built_in">len</span>(data)])</span><br><span class="line">        shock=sigma*np.sqrt(dt)</span><br><span class="line">        drift=mu*dt</span><br><span class="line">        a=drift+random.normal(drift,shock)</span><br><span class="line">    <span class="built_in">sum</span>+=a</span><br><span class="line">data.append(<span class="built_in">sum</span>/M)</span><br><span class="line"><span class="keyword">return</span> data</span><br></pre></td></tr></table></figure>
+<h3><span id="3deploy-to-server">3.Deploy to Server</span></h3><p>This part is for display of result, to do that, we rent an Ali ECS server, the operating system is CentOS7,  public network IP is: 47.117.126.163</p>
+<p>Then we can step into the configuration of server.</p>
+<h4><span id="installation-of-python">Installation of Python</span></h4><p>Using the command yum to install python. Before that we need to install some prepositive libraries.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y groupinstall</span><br><span class="line">yum -y install zlib-devel</span><br></pre></td></tr></table></figure>
+<p>Then visit python official website <a target="_blank" rel="noopener" href="https://www.python.org/">https://www.python.org/</a>, Download the appropriate Linux version. We downloaded Python-3.6.8.tgz, and uploaded it to our server.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -xvzf Python-3.6.8.tgz</span><br><span class="line"><span class="built_in">cd</span> Python-3.6.8/</span><br><span class="line">./configure --prefix=/usr/python</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>Installation complete.</p>
+<h4><span id="installation-of-nginx">Installation of Nginx</span></h4><p>Synchronous display on a web page is implemented by nginx. Installation of prepositive libraries:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc-c++</span><br><span class="line">yum install -y pcre pcre-devel</span><br><span class="line">yum install -y openssl openssl-devel</span><br></pre></td></tr></table></figure>
+<p>Using the command wget to download nginx:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -c https://nginx.org/download/nginx-1.12.0.tar.gz</span><br></pre></td></tr></table></figure>
+<p>Unzip and install:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf nginx-1.12.0.tar.gz</span><br><span class="line"><span class="built_in">cd</span> nginx-1.12.0</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>Start nginx:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start nginx</span><br></pre></td></tr></table></figure>
+<p>Then configure HTML files to achieve function of real-time display.</p>
+<h2><span id="3result-presentation">3.Result presentation</span></h2><p>You can use it on <a target="_blank" rel="noopener" href="http://47.117.126.163:5000/result">http://47.117.126.163:5000/result</a> by yourself.</p>
+<h4><span id="code-600837ss-m-1000-n-100">code = ‘600837.ss’ , M = 1000 , N =100</span></h4><center class="half">
+<img src="/.com//you1.jpg" width="50%" align="left"><img src="/.com//you2.jpg" width="50%" align="right">
+</center>
+<center class="half">
+<img src="/.com//you4.jpg" width="50%" align="left"><img src="/.com//you5.jpg" width="50%" align="right">
+</center>
+
+<h4><span id="code-600519ss-m-1000-n-100">code = ‘600519.ss’ , M = 1000 , N =100</span></h4><center class="half">
+<img src="/.com//1.jpg" width="50%" align="left"><img src="/.com//2.jpg" width="50%" align="right">
+</center>
+<center class="half">
+<img src="/.com//3.jpg" width="50%" align="left"><img src="/.com//4.jpg" width="50%" align="right">
+</center>
+
+
+
+<h2><span id="4lstm">4.LSTM</span></h2><p>The predictions above are not very precise, so we turned to the machine learning. Long short-term memory (LSTM) is an artificial neural network (RNN) architecture used in the field of deep learning. It’s good at handling stock forecasts.</p>
+<center class="full">
+<img src="/.com//lstm.png" width="100%">
+</center>
+We can see that the results are very precise. But the calculation needs grate computing power, so it's not suitable for deployment on the server since the ECS server even does not have a GPU. So we just run the program on our own computer.
+
+### code = '600519.ss' , epochs = 300
+
+<center class="half">
+<img src="/.com//l1.png" width="50%" align="left"><img src="/.com//l2.png" width="50%" align="right">
+</center>
+
+<p>left: data set/train set = 1/1, data from 1/1/2019 to 3/21/2021<br>right: data set/train set = 4/1, data from 1/1/2019 to 3/21/2021</p>
+<center class="half">
+<img src="/.com//l3.png" width="50%" align="left"><img src="/.com//l4.png" width="50%" align="right">
+</center>
+
+<p>left: data set/train set = 1/1, data from 1/1/2018 to 3/21/2021<br>right: data set/train set = 4/1, data from 1/1/2018 to 3/21/2021</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Stock Price Forecast Based on Monte Carlo Method and Machine Learning</p><p><a href="http://example.com/2021/03/23/stock-price-forecast-based-on-Monte-Carlo-method-and-machine-learning/">http://example.com/2021/03/23/stock-price-forecast-based-on-Monte-Carlo-method-and-machine-learning/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Yuzi Liang</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-03-23</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2021-03-29</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Machine-Learning/">Machine Learning</a><a class="link-muted mr-2" rel="tag" href="/tags/Monte-Carlo-Method/">Monte Carlo Method</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/03/23/Use-GAN-to-Generate-Anime-Style-Pictures-to-Be-Continued/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Use GAN to Generate Anime Style Pictures(to Be Continued)</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/03/23/notes-of-machine-learning/"><span class="level-item">Notes of Machine Learning(P1-P11)</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://example.com/2021/03/23/stock-price-forecast-based-on-Monte-Carlo-method-and-machine-learning/';
+            this.page.identifier = '2021/03/23/stock-price-forecast-based-on-Monte-Carlo-method-and-machine-learning/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'lyz' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-04-04T04:22:22.000Z">2023-04-03</time></p><p class="title"><a href="/2023/04/03/Diffusion-model/">Diffusion model</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-11-08T02:10:30.000Z">2022-11-07</time></p><p class="title"><a href="/2022/11/07/TensorFlow-Tutorial/">TensorFlow Tutorial</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-28T22:58:52.000Z">2022-05-28</time></p><p class="title"><a href="/2022/05/28/Lattice-Boltzmann-Method/">Lattice Boltzmann Method</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-09-18T01:47:06.000Z">2021-09-17</time></p><p class="title"><a href="/2021/09/17/Totorial-of-Google-Colab-and-Pytorch/">Tutorial of Google Colab and PyTorch</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-08-28T07:59:55.000Z">2021-08-28</time></p><p class="title"><a href="/2021/08/28/Image-Generator-Application-and-Implementation-of-StyleGAN/">Image Generator: Application and Implementation of StyleGAN</a></p><p class="categories"><a href="/categories/Project-Summary/">Project Summary</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Demo/"><span class="level-start"><span class="level-item">Demo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Learning-Notes/"><span class="level-start"><span class="level-item">Learning Notes</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/Project-Summary/"><span class="level-start"><span class="level-item">Project Summary</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Machine-Learning/"><span class="tag">Machine Learning</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Magnetics/"><span class="tag">Magnetics</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Monte-Carlo-Method/"><span class="tag">Monte Carlo Method</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PyTorch/"><span class="tag">PyTorch</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Selenium/"><span class="tag">Selenium</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TensorFlow/"><span class="tag">TensorFlow</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Thermoelectricity/"><span class="tag">Thermoelectricity</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Web-Crawler/"><span class="tag">Web Crawler</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a><p class="is-size-7"><span>&copy; 2023 Yuzi Liang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Notes of Machine Learning(P18-P19) - Yuzi Liang | University of Science and Technology of China</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Yuzi Liang | University of Science and Technology of China"><meta name="msapplication-TileImage" content="/img/favicon2.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Yuzi Liang | University of Science and Technology of China"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Graph Neural Networks Graph GNN: How? GNN Roadmap Spatial-based Convolution NN4G (Neural Networks for Graph) DCNN (Diffusion-Convolution Neural Network) DGC (Diffusion Graph Convolution) MoNET (Mixt"><meta property="og:type" content="blog"><meta property="og:title" content="Notes of Machine Learning(P18-P19)"><meta property="og:url" content="http://example.com/2021/06/24/Notes-of-Machine-Learning-P18/"><meta property="og:site_name" content="Yuzi Liang | University of Science and Technology of China"><meta property="og:description" content="Graph Neural Networks Graph GNN: How? GNN Roadmap Spatial-based Convolution NN4G (Neural Networks for Graph) DCNN (Diffusion-Convolution Neural Network) DGC (Diffusion Graph Convolution) MoNET (Mixt"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/.com//no.png"><meta property="og:image" content="http://example.com/.com//gnnr.png"><meta property="og:image" content="http://example.com/.com//gnnp.png"><meta property="og:image" content="http://example.com/.com//qq.png"><meta property="og:image" content="http://example.com/.com//ro.png"><meta property="og:image" content="http://example.com/.com//dcnn.png"><meta property="og:image" content="http://example.com/.com//dcnnr.png"><meta property="og:image" content="http://example.com/.com//dgc.png"><meta property="og:image" content="http://example.com/.com//monet.png"><meta property="og:image" content="http://example.com/.com//sage.png"><meta property="og:image" content="http://example.com/.com//gat.png"><meta property="article:published_time" content="2021-06-24T23:53:45.000Z"><meta property="article:modified_time" content="2022-11-13T04:29:13.983Z"><meta property="article:author" content="Yuzi Liang"><meta property="article:tag" content="Machine Learning"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/.com//no.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2021/06/24/Notes-of-Machine-Learning-P18/"},"headline":"Yuzi Liang | University of Science and Technology of China","image":["http://example.com/.com//no.png","http://example.com/.com//gnnr.png","http://example.com/.com//gnnp.png","http://example.com/.com//qq.png","http://example.com/.com//ro.png","http://example.com/.com//dcnn.png","http://example.com/.com//dcnnr.png","http://example.com/.com//dgc.png","http://example.com/.com//monet.png","http://example.com/.com//sage.png","http://example.com/.com//gat.png"],"datePublished":"2021-06-24T23:53:45.000Z","dateModified":"2022-11-13T04:29:13.983Z","author":{"@type":"Person","name":"Yuzi Liang"},"description":"Graph Neural Networks Graph GNN: How? GNN Roadmap Spatial-based Convolution NN4G (Neural Networks for Graph) DCNN (Diffusion-Convolution Neural Network) DGC (Diffusion Graph Convolution) MoNET (Mixt"}</script><link rel="canonical" href="http://example.com/2021/06/24/Notes-of-Machine-Learning-P18/"><link rel="icon" href="/img/favicon2.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-06-24T23:53:45.000Z" title="6/24/2021, 4:53:45 PM">2021-06-24</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-11-13T04:29:13.983Z" title="11/12/2022, 8:29:13 PM">2022-11-12</time></span><span class="level-item"><a class="link-muted" href="/categories/Learning-Notes/">Learning Notes</a></span><span class="level-item">2 minutes read (About 332 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">Notes of Machine Learning(P18-P19)</h1><div class="content"><!-- toc -->
+<ul>
+<li><a href="#graph-neural-networks">Graph Neural Networks</a><ul>
+<li><a href="#graph">Graph</a></li>
+<li><a href="#gnn-how">GNN: How?</a></li>
+<li><a href="#gnn-roadmap">GNN Roadmap</a></li>
+<li><a href="#spatial-based-convolution">Spatial-based Convolution</a><ul>
+<li><a href="#nn4g-neural-networks-for-graph">NN4G (Neural Networks for Graph)</a></li>
+<li><a href="#dcnn-diffusion-convolution-neural-network">DCNN (Diffusion-Convolution Neural Network)</a></li>
+<li><a href="#dgc-diffusion-graph-convolution">DGC (Diffusion Graph Convolution)</a></li>
+<li><a href="#monet-mixture-model-networks">MoNET (Mixture Model Networks)</a></li>
+<li><a href="#graphsage">GraphSAGE</a></li>
+<li><a href="#gat-graph-attention-networks">GAT (Graph Attention Networks)</a></li>
+<li><a href="#gin-graph-isomorphism-network">GIN (Graph Isomorphism Network)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h1><span id="graph-neural-networks">Graph Neural Networks</span></h1><h2><span id="graph">Graph</span></h2><p>Node &amp; edge (节点和边)</p>
+<p>在很多应用场景, Unlabeled Node的数量是远大于Labled Node的数量的.</p>
+<center class="pic1">
+<img src="/.com//no.png" width="80%">
+</center>
+
+<h2><span id="gnn-how">GNN: How?</span></h2><p>$\cdot$ how to embed node into a feature space using convolution?</p>
+<p>一个Graph怎么做卷积呢?</p>
+<p>Solution 1: Generalize the concept of convolution (corelation) to graph $\rightarrow$ Spatial-based convolution</p>
+<p>Solution 2: Back to the defination of convolution in signal processing $\rightarrow$  Spectral-based convolution</p>
+<p>分别是基于空间与基于频谱的卷积.</p>
+<h2><span id="gnn-roadmap">GNN Roadmap</span></h2><center class="pic2">
+<img src="/.com//gnnr.png" width="80%">
+</center>
+
+
+<p>接着具体讲一下这两种Solution</p>
+<h2><span id="spatial-based-convolution">Spatial-based Convolution</span></h2><p>Terminology:</p>
+<p>$\cdot$ Aggregate: 用neighbor feature update下一层的hidden state</p>
+<p>$\cdot$ Readout: 把所有nodes的feature集合起来代表整个graph</p>
+<center class="pic3">
+<img src="/.com//gnnp.png" width="80%">
+</center>
+
+<h3><span id="nn4g-neural-networks-for-graph">NN4G (Neural Networks for Graph)</span></h3><p>先做Aggregate:</p>
+<center class="pic4">
+<img src="/.com//qq.png" width="80%">
+</center>
+
+<p>Readout:</p>
+<p>每一层都求和取平均,再经过一个节点输出</p>
+<center class="pic5">
+<img src="/.com//ro.png" width="80%">
+</center>
+
+<h3><span id="dcnn-diffusion-convolution-neural-network">DCNN (Diffusion-Convolution Neural Network)</span></h3><p>Aggregate:</p>
+<center class="pic6">
+<img src="/.com//dcnn.png" width="80%">
+</center>
+
+
+<p>每一层都是在最初始的graph上计算,只是每一层取的距离不一样,第一层计算与每个node相距为1的node的平均值,第二计算与每个node相距为2的node的平均值(自己也算与自己相距为2的node),以此类推.</p>
+<p>Readout:</p>
+<center class="pic7">
+<img src="/.com//dcnnr.png" width="80%">
+</center>
+
+<h3><span id="dgc-diffusion-graph-convolution">DGC (Diffusion Graph Convolution)</span></h3><p>与上一个方法的Readout不一样, DGC直接把结果全部加起来</p>
+<center class="pic7">
+<img src="/.com//dgc.png" width="25%">
+</center>
+
+<h3><span id="monet-mixture-model-networks">MoNET (Mixture Model Networks)</span></h3><p>$\cdot$ Define a measure on node ‘distance’.</p>
+<p>$\cdot$ Use weighted sum (mean) instead of simply summing up (averaging) neighbor features.</p>
+<center class="pic8">
+<img src="/.com//monet.png" width="80%">
+</center>
+
+<h3><span id="graphsage">GraphSAGE</span></h3><center class="pic9">
+<img src="/.com//sage.png" width="80%">
+</center>
+
+<h3><span id="gat-graph-attention-networks">GAT (Graph Attention Networks)</span></h3><center class="pic10">
+<img src="/.com//gat.png" width="80%">
+</center>
+
+<h3><span id="gin-graph-isomorphism-network">GIN (Graph Isomorphism Network)</span></h3><p>$\cdot$ A GNN can be at most as powerful as WL isomorphic test</p>
+<p>$\cdot$ Theoretical proofs were provided</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Notes of Machine Learning(P18-P19)</p><p><a href="http://example.com/2021/06/24/Notes-of-Machine-Learning-P18/">http://example.com/2021/06/24/Notes-of-Machine-Learning-P18/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Yuzi Liang</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-06-24</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2022-11-12</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Machine-Learning/">Machine Learning</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/07/22/Notes-of-Machine-Learning-P20/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Notes of Machine Learning(P20-P21)</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/06/04/Notes-of-Machine-Learning-P12/"><span class="level-item">Notes of Machine Learning(P12-P17)</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://example.com/2021/06/24/Notes-of-Machine-Learning-P18/';
+            this.page.identifier = '2021/06/24/Notes-of-Machine-Learning-P18/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'lyz' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-04-04T04:22:22.000Z">2023-04-03</time></p><p class="title"><a href="/2023/04/03/Diffusion-model/">Diffusion model</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-11-08T02:10:30.000Z">2022-11-07</time></p><p class="title"><a href="/2022/11/07/TensorFlow-Tutorial/">TensorFlow Tutorial</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-28T22:58:52.000Z">2022-05-28</time></p><p class="title"><a href="/2022/05/28/Lattice-Boltzmann-Method/">Lattice Boltzmann Method</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-09-18T01:47:06.000Z">2021-09-17</time></p><p class="title"><a href="/2021/09/17/Totorial-of-Google-Colab-and-Pytorch/">Tutorial of Google Colab and PyTorch</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-08-28T07:59:55.000Z">2021-08-28</time></p><p class="title"><a href="/2021/08/28/Image-Generator-Application-and-Implementation-of-StyleGAN/">Image Generator: Application and Implementation of StyleGAN</a></p><p class="categories"><a href="/categories/Project-Summary/">Project Summary</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Demo/"><span class="level-start"><span class="level-item">Demo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Learning-Notes/"><span class="level-start"><span class="level-item">Learning Notes</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/Project-Summary/"><span class="level-start"><span class="level-item">Project Summary</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Machine-Learning/"><span class="tag">Machine Learning</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Magnetics/"><span class="tag">Magnetics</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Monte-Carlo-Method/"><span class="tag">Monte Carlo Method</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PyTorch/"><span class="tag">PyTorch</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Selenium/"><span class="tag">Selenium</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TensorFlow/"><span class="tag">TensorFlow</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Thermoelectricity/"><span class="tag">Thermoelectricity</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Web-Crawler/"><span class="tag">Web Crawler</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a><p class="is-size-7"><span>&copy; 2023 Yuzi Liang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

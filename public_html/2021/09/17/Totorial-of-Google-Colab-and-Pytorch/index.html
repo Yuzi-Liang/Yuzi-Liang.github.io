@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Tutorial of Google Colab and PyTorch - Yuzi Liang | University of Science and Technology of China</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Yuzi Liang | University of Science and Technology of China"><meta name="msapplication-TileImage" content="/img/favicon2.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Yuzi Liang | University of Science and Technology of China"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Introduction of Colab Useful Linux Commands (in Colab) Mounting Google Drive   PyTorch Tutorial Outline Prerequisites What is PyTorch? PyTorch v.s. TensorFlow Overview of the DNN Training Procedure"><meta property="og:type" content="blog"><meta property="og:title" content="Tutorial of Google Colab and PyTorch"><meta property="og:url" content="http://example.com/2021/09/17/Totorial-of-Google-Colab-and-Pytorch/"><meta property="og:site_name" content="Yuzi Liang | University of Science and Technology of China"><meta property="og:description" content="Introduction of Colab Useful Linux Commands (in Colab) Mounting Google Drive   PyTorch Tutorial Outline Prerequisites What is PyTorch? PyTorch v.s. TensorFlow Overview of the DNN Training Procedure"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/.com//col.png"><meta property="og:image" content="http://example.com/.com//col2.png"><meta property="og:image" content="http://example.com/.com//col3.png"><meta property="og:image" content="http://example.com/.com//tvt.png"><meta property="og:image" content="http://example.com/.com//ov.png"><meta property="og:image" content="http://example.com/.com//tensor.png"><meta property="og:image" content="http://example.com/.com//shape.png"><meta property="og:image" content="http://example.com/.com//squ.png"><meta property="og:image" content="http://example.com/.com//uns.png"><meta property="og:image" content="http://example.com/.com//tr.png"><meta property="og:image" content="http://example.com/.com//cat.png"><meta property="og:image" content="http://example.com/.com//pvt.png"><meta property="og:image" content="http://example.com/.com//gra.png"><meta property="og:image" content="http://example.com/.com//ovv.png"><meta property="og:image" content="http://example.com/.com//dl.png"><meta property="og:image" content="http://example.com/.com//bs.png"><meta property="og:image" content="http://example.com/.com//nnl.png"><meta property="og:image" content="http://example.com/.com//fcl.png"><meta property="og:image" content="http://example.com/.com//sga.png"><meta property="og:image" content="http://example.com/.com//rea.png"><meta property="og:image" content="http://example.com/.com//img1.png"><meta property="og:image" content="http://example.com/.com//img2.png"><meta property="article:published_time" content="2021-09-18T01:47:06.000Z"><meta property="article:modified_time" content="2021-10-24T12:29:09.839Z"><meta property="article:author" content="Yuzi Liang"><meta property="article:tag" content="Machine Learning"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/.com//col.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2021/09/17/Totorial-of-Google-Colab-and-Pytorch/"},"headline":"Yuzi Liang | University of Science and Technology of China","image":["http://example.com/.com//col.png","http://example.com/.com//col2.png","http://example.com/.com//col3.png","http://example.com/.com//tvt.png","http://example.com/.com//ov.png","http://example.com/.com//tensor.png","http://example.com/.com//shape.png","http://example.com/.com//squ.png","http://example.com/.com//uns.png","http://example.com/.com//tr.png","http://example.com/.com//cat.png","http://example.com/.com//pvt.png","http://example.com/.com//gra.png","http://example.com/.com//ovv.png","http://example.com/.com//dl.png","http://example.com/.com//bs.png","http://example.com/.com//nnl.png","http://example.com/.com//fcl.png","http://example.com/.com//sga.png","http://example.com/.com//rea.png","http://example.com/.com//img1.png","http://example.com/.com//img2.png"],"datePublished":"2021-09-18T01:47:06.000Z","dateModified":"2021-10-24T12:29:09.839Z","author":{"@type":"Person","name":"Yuzi Liang"},"description":"Introduction of Colab Useful Linux Commands (in Colab) Mounting Google Drive   PyTorch Tutorial Outline Prerequisites What is PyTorch? PyTorch v.s. TensorFlow Overview of the DNN Training Procedure"}</script><link rel="canonical" href="http://example.com/2021/09/17/Totorial-of-Google-Colab-and-Pytorch/"><link rel="icon" href="/img/favicon2.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-09-18T01:47:06.000Z" title="9/17/2021, 6:47:06 PM">2021-09-17</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-10-24T12:29:09.839Z" title="10/24/2021, 5:29:09 AM">2021-10-24</time></span><span class="level-item"><a class="link-muted" href="/categories/Learning-Notes/">Learning Notes</a></span><span class="level-item">9 minutes read (About 1293 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">Tutorial of Google Colab and PyTorch</h1><div class="content"><!-- toc -->
+<ul>
+<li><a href="#introduction-of-colab">Introduction of Colab</a><ul>
+<li><a href="#useful-linux-commands-in-colab">Useful Linux Commands (in Colab)</a></li>
+<li><a href="#mounting-google-drive">Mounting Google Drive</a></li>
+</ul>
+</li>
+<li><a href="#pytorch-tutorial">PyTorch Tutorial</a><ul>
+<li><a href="#outline">Outline</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#what-is-pytorch">What is PyTorch?</a></li>
+<li><a href="#pytorch-vs-tensorflow">PyTorch v.s. TensorFlow</a></li>
+<li><a href="#overview-of-the-dnn-training-procedure">Overview of the DNN Training Procedure</a></li>
+<li><a href="#tensor">Tensor</a><ul>
+<li><a href="#data-type">Data Type</a></li>
+<li><a href="#shape-of-tensor">Shape of Tensor</a></li>
+<li><a href="#constructor">Constructor</a></li>
+<li><a href="#operators">Operators</a></li>
+<li><a href="#pytorch-vs-tensorflow">Pytorch v.s. TensorFlow</a></li>
+<li><a href="#device">Device</a></li>
+<li><a href="#device-gpu">Device (GPU)</a></li>
+</ul>
+</li>
+<li><a href="#how-to-calculate-gradient">How to Calculate Gradient?</a></li>
+<li><a href="#overview-of-the-dnn-training-procedure-1">Overview of the DNN Training Procedure</a></li>
+<li><a href="#dataset-dataloader">Dataset &amp; Dataloader</a><ul>
+<li><a href="#torchnn-neural-network-layers">torch.nn — Neural Network Layers</a></li>
+<li><a href="#torchnn-activation-functions">torch.nn — Activation Functions</a></li>
+<li><a href="#torchnn-loss-functions">torch.nn — Loss Functions</a></li>
+<li><a href="#torchnn-build-your-own-neural-network">torch.nn — Build your own neural network</a></li>
+<li><a href="#torchoptim">torch.optim</a></li>
+</ul>
+</li>
+<li><a href="#neural-network-training">Neural Network Training</a></li>
+<li><a href="#neural-network-evaluation-validation-set">Neural Network Evaluation (Validation Set)</a></li>
+<li><a href="#neural-network-evaluation-testing-set">Neural Network Evaluation (Testing Set)</a></li>
+<li><a href="#saveload-a-neural-network">Save/Load a Neural Network</a></li>
+<li><a href="#more-about-pytorch">More about PyTorch</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h1><span id="introduction-of-colab">Introduction of Colab</span></h1><p>Colaboratory, or “Colab” for short, allows you to write and execute Python in your browser, with</p>
+<p>$\bullet$ Zero configuration required</p>
+<p>$\bullet$​ Free access to GPUs</p>
+<p>$\bullet$ Easy sharing</p>
+<p>Colab demo: <a target="_blank" rel="noopener" href="https://reurl.cc/ra63jE">https://reurl.cc/ra63jE</a></p>
+<p>in this demo you will learn the following:</p>
+<p>$\bullet$ Use GPU resource provided by Google</p>
+<p>$\bullet$ Download files using Colab</p>
+<p>$\bullet$ Connect Google Colab with your Google drive</p>
+<p>Google Colab中可以打入代码的部分被称为code block,直接打入的代码将以Python诠释,如果前面加上感叹号!的话,程序将以shell script诠释</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>或者是</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!ls -l</span><br></pre></td></tr></table></figure>
+<p>Exclamation mark (!) starts a new shell, does the operations, and then kills that shell, while percentage (%) affects the process associated with the notebook, and it is called a magic function.</p>
+<p>感叹号的功能是开启一个新的shell,执行程序后将shell终止掉,如果要用cd之类的指令需要用百分比符号(%)</p>
+<p>下面是一些常用的按键</p>
+<p align="center">
+<img src="/.com//col.png" width="90%">
+</p>
+
+<p>以及保存程序的方法</p>
+<p align="center">
+<img src="/.com//col2.png" width="90%">
+</p>
+
+<p>Colab自带备份功能,可以通过如下方法恢复之前的文件</p>
+<p align="center">
+<img src="/.com//col3.png" width="90%">
+</p>
+
+<h2><span id="useful-linux-commands-in-colab">Useful Linux Commands (in Colab)</span></h2><p>ls: List all files in the current directory</p>
+<p>ls -l: List all files in the current directory with more detail</p>
+<p>pwd: Output the working directory</p>
+<p>mkdir &lt;dirname&gt;: Create a directory named &lt;dirname&gt;</p>
+<p>cd &lt;dirname&gt;: Move to directory named &lt;dirname&gt;</p>
+<p>gdown: Download files from google drive</p>
+<p>wget: Download files from the internet</p>
+<p>python &lt;python_file&gt;: Executes a python file</p>
+<h2><span id="mounting-google-drive">Mounting Google Drive</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> google.colab <span class="keyword">import</span> drive <span class="comment"># Import a library named google.colab</span></span><br><span class="line">drive.mount(<span class="string">&#x27;/content/drive&#x27;</span>, force_remount=<span class="literal">True</span>) <span class="comment"># mount the content to the directory `/content/drive`</span></span><br></pre></td></tr></table></figure>
+<h1><span id="pytorch-tutorial">PyTorch Tutorial</span></h1><h2><span id="outline">Outline</span></h2><p>$\bullet$ Prerequisites</p>
+<p>$\bullet$ What is PyTorch?</p>
+<p>$\bullet$ Pytorch v.s. TensorFlow</p>
+<p>$\bullet$ Overview of the DNN Training Procedure</p>
+<p>$\bullet$ Tensor</p>
+<p>$\bullet$ How to Calculate Gradient?</p>
+<p>$\bullet$ Dataset &amp; Dataloader</p>
+<p>$\bullet$ torch.nn</p>
+<p>$\bullet$ torch.optim</p>
+<p>$\bullet$ Neural Network Training/Evaluation</p>
+<p>$\bullet$ Saving/Loading a Neural Network</p>
+<p>$\bullet$ More About PyTorch</p>
+<h2><span id="prerequisites">Prerequisites</span></h2><p>Python3</p>
+<p>Numpy</p>
+<h2><span id="what-is-pytorch">What is PyTorch?</span></h2><p>$\bullet$​​ An open source $\textbf{machine learning framework}$​​</p>
+<p>$\bullet$ A Python package that provides two high-level features:</p>
+<p>​    $\cdot$ $\textbf{Tensor}$​ computation (like Numpy) with strong $\textbf{GPU acceleration}$</p>
+<p>​    $\cdot$​ Deep neural networks built on a $\textbf{tape-based autograd}$​ system</p>
+<h2><span id="pytorch-vs-tensorflow">PyTorch v.s. TensorFlow</span></h2><p align="center">
+<img src="/.com//tvt.png" width="90%">
+</p>
+
+
+
+<h2><span id="overview-of-the-dnn-training-procedure">Overview of the DNN Training Procedure</span></h2><p align="center">
+<img src="/.com//ov.png" width="90%">
+</p>
+
+
+
+<h2><span id="tensor">Tensor</span></h2><h3><span id="data-type">Data Type</span></h3><p align="center">
+<img src="/.com//tensor.png" width="90%">
+</p>
+
+
+
+<h3><span id="shape-of-tensor">Shape of Tensor</span></h3><p align="center">
+<img src="/.com//shape.png" width="90%">
+</p>
+
+
+
+<h3><span id="constructor">Constructor</span></h3><p>$\bullet$ From list/Numpy array</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = torch.tensor([[<span class="number">1</span>, -<span class="number">1</span>], [-<span class="number">1</span>, <span class="number">1</span>]])</span><br><span class="line">x = torch.from_numpy(np.array([[<span class="number">1</span>, -<span class="number">1</span>], [-<span class="number">1</span>, <span class="number">1</span>]]))</span><br></pre></td></tr></table></figure>
+<p>$\bullet$​ Zero tensor</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = torch.zeros([<span class="number">2</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<p>$2 \times 2$矩阵,其中全部元素都是0</p>
+<p>$\bullet$ Unit tensor</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x= torch.ones([<span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+<p>$1 \times 2 \times 5$矩阵,其中全部元素都是1</p>
+<h3><span id="operators">Operators</span></h3><p>$\bullet$ Squeeze: remove the specified dimension with length = 1</p>
+<p>移除掉长度为1的维度</p>
+<p align="center">
+<img src="/.com//squ.png" width="90%">
+</p>
+
+<p>$\bullet$ Unsqueeze: expand a new dimension</p>
+<p>展开一个新的维度,相当于上面操作的逆操作</p>
+<p align="center">
+<img src="/.com//uns.png" width="90%">
+</p>
+
+<p>$\bullet$ Transpose: transpose two specified dimensions</p>
+<p>矩阵的转置操作</p>
+<p align="center">
+<img src="/.com//tr.png" width="90%">
+</p>
+
+<p>$\bullet$​ Cat: concatenate multiple tensors</p>
+<p>连接多个矩阵</p>
+<p align="center">
+<img src="/.com//cat.png" width="90%">
+</p>
+
+<p>$\bullet$ Addition</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">z = x + y</span><br></pre></td></tr></table></figure>
+<p>$\bullet$ Subtraction</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">z = x - y</span><br></pre></td></tr></table></figure>
+<p>$\bullet$ Power</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y = x.<span class="built_in">pow</span>(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>$\bullet$​ Summation</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y = x.<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure>
+<p>$\bullet$ Mean</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y = x.mean()</span><br></pre></td></tr></table></figure>
+<h3><span id="pytorch-vs-tensorflow">Pytorch v.s. TensorFlow</span></h3><p>$\bullet$ Shape manipulation</p>
+<p align="center">
+<img src="/.com//pvt.png" width="90%">
+</p>
+
+
+
+<h3><span id="device">Device</span></h3><p>$\bullet$ Default: tensor &amp; modules will be computed with <strong>CPU</strong></p>
+<p>$\bullet$ CPU</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = x.to(<span class="string">&#x27;cpu&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>$\bullet$GPU</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = x.to(<span class="string">&#x27;cuda&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3><span id="device-gpu">Device (GPU)</span></h3><p>$\bullet$ Check if your computer has NVDIA GPU</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.cuda.is_available()</span><br></pre></td></tr></table></figure>
+<p>$\bullet$ Multiple GPUs: specify ‘cuda:0’, ‘cuda:1’, ‘cuda:2’, …</p>
+<p>$\bullet$ Why GPU?</p>
+<p>​    $\cdot$ Parallel computing</p>
+<p>​    $\cdot$ <a target="_blank" rel="noopener" href="https://towardsdatascience.com/what-is-a-gpu-and-do-you-need-one-in-deep-learning-718b9597aa0d">https://towardsdatascience.com/what-is-a-gpu-and-do-you-need-one-in-deep-learning-718b9597aa0d</a></p>
+<h2><span id="how-to-calculate-gradient">How to Calculate Gradient?</span></h2><p align="center">
+<img src="/.com//gra.png" width="90%">
+</p>
+
+
+
+<h2><span id="overview-of-the-dnn-training-procedure">Overview of the DNN Training Procedure</span></h2><p align="center">
+<img src="/.com//ovv.png" width="90%">
+</p>
+
+
+
+<h2><span id="dataset-amp-dataloader">Dataset &amp; Dataloader</span></h2> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> Dataset, DataLoader</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyDataset</span>(<span class="params">Dataset</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, file</span>):</span></span><br><span class="line">        self.data = ...</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span>(<span class="params">self, index</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.data[index]</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.data)</span><br></pre></td></tr></table></figure>
+<p align="center">
+<img src="/.com//dl.png" width="90%">
+</p>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataset = MyDataset(file)</span><br><span class="line">dataloader = DataLoader(dataset, batch_size, shuffle=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>对于Training data,我们需要shuffle,对于Testing data,则不需要shuffle</p>
+<p align="center">
+<img src="/.com//bs.png" width="90%">
+</p>
+
+
+<h3><span id="torchnn-neural-network-layers">torch.nn — Neural Network Layers</span></h3><ul>
+<li>Linear Layer (Fully-connected Layer)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nn.Linear(in_features, out_features)</span><br></pre></td></tr></table></figure>
+<p>in_features: 输入input的维度</p>
+<p>out_features: 输出output的维度</p>
+<p>比如这样一个网络</p>
+<p align="center">
+<img src="/.com//nnl.png" width="90%">
+</p>
+
+<p>前后输入矩阵*部分可以是任何大小</p>
+<p align="center">
+<img src="/.com//fcl.png" width="90%">
+</p>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ayer = torch.nn.Linear(<span class="number">32</span>, <span class="number">64</span>)</span><br><span class="line">layer.weight.shape</span><br></pre></td></tr></table></figure>
+<p>torch.Size([64, 32])</p>
+<p>显示W矩阵的形状</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">layer.bias.shape</span><br></pre></td></tr></table></figure>
+<p>torch.Size([64])</p>
+<h3><span id="torchnn-activation-functions">torch.nn — Activation Functions</span></h3><ul>
+<li>Sigmoid Activation</li>
+</ul>
+<p align="center">
+<img src="/.com//sga.png" width="90%">
+</p>
+
+<ul>
+<li>reLU Activation</li>
+</ul>
+<p align="center">
+<img src="/.com//rea.png" width="90%">
+</p>
+
+
+
+<h3><span id="torchnn-loss-functions">torch.nn — Loss Functions</span></h3><ul>
+<li>Mean Squared Error (for linear regression)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nn.MSELoss()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Cross Entropy (for classification)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nn.CrossEntropyLoss()</span><br></pre></td></tr></table></figure>
+<h3><span id="torchnn-build-your-own-neural-network">torch.nn — Build your own neural network</span></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyModel</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>(MyModel, self).__init__()</span><br><span class="line">        self.net = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">10</span>, <span class="number">32</span>)</span><br><span class="line">            nn.Sigmoid(),</span><br><span class="line">            nn.Linear(<span class="number">32</span>, <span class="number">1</span>)</span><br><span class="line">        )</span><br><span class="line">      </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.net(x)</span><br></pre></td></tr></table></figure>
+<p align="center">
+<img src="/.com//img1.png" width="50%">
+</p>
+
+<p>这样就建立了一个如上图所示的neural network</p>
+<h3><span id="torchoptim">torch.optim</span></h3><ul>
+<li><strong>Optimization algorithms</strong> for neural networks (gradient descent)</li>
+<li>Stochastic Gradient Descent (SGD)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.optim.SGD(params, lr, momentum = <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>params是需要输入model的parameter: model.parameters()</p>
+<h2><span id="neural-network-training">Neural Network Training</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">device = torch.device(<span class="string">&quot;cuda:0&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span>) <span class="comment"># 单GPU或者CPU</span></span><br><span class="line">dataset = MyDataset(file) <span class="comment"># read data via MyDataset</span></span><br><span class="line">tr_set = DataLoader(dataset, <span class="number">16</span>, shuffle = <span class="literal">True</span>) <span class="comment"># put dataset into Dataloader</span></span><br><span class="line">model = MyModel().to(device) <span class="comment"># contruct model and move to device (CPU/CUDA)</span></span><br><span class="line">creterion = nn.MSELoss() <span class="comment"># set loss function</span></span><br><span class="line">optimizer = torch.optm.SGD(model.parameters(),<span class="number">0.1</span>) <span class="comment"># set optimizer</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(n_epochs): <span class="comment"># iterate n_epochs</span></span><br><span class="line">    model.train() <span class="comment"># set model to train mode</span></span><br><span class="line">    <span class="keyword">for</span> x, y <span class="keyword">in</span> tr_set: <span class="comment"># iterate through the dataloader</span></span><br><span class="line">        optimizer.zero_grad() <span class="comment"># set gradient to zero</span></span><br><span class="line">        x, y = x.to(device), y.to(device) <span class="comment"># move data to device</span></span><br><span class="line">        pred = model(x) <span class="comment"># forward pass (compute output)</span></span><br><span class="line">        loss = criterion(pred, y) <span class="comment"># compute loss</span></span><br><span class="line">        loss.backward() <span class="comment"># compute gradient (backpropagation)</span></span><br><span class="line">        optimizer.step() <span class="comment"># update model with optimizer</span></span><br></pre></td></tr></table></figure>
+<h2><span id="neural-network-evaluation-validation-set">Neural Network Evaluation (Validation Set)</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model.<span class="built_in">eval</span>() <span class="comment"># set model to evaluation mode</span></span><br><span class="line">total_loss = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> x,y <span class="keyword">in</span> dv_set: <span class="comment"># iterate through the dataloader</span></span><br><span class="line">    x, y = x.to(device), y.to(device) <span class="comment"># move data to device</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad(): <span class="comment"># disable gradient caculation</span></span><br><span class="line">        pred = model(x) <span class="comment"># forward pass (compute output)</span></span><br><span class="line">        loss = criterion(pred, y) <span class="comment"># compute loss</span></span><br><span class="line">    total_loss += loss.cpu().item * <span class="built_in">len</span>(x) <span class="comment"># accumulate loss</span></span><br><span class="line">    avg_loss = total_loss / <span class="built_in">len</span>(dv_set.dataset) <span class="comment"># compute averaged loss</span></span><br></pre></td></tr></table></figure>
+<h2><span id="neural-network-evaluation-testing-set">Neural Network Evaluation (Testing Set)</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">model.<span class="built_in">eval</span>() <span class="comment"># set model to evaluation mode</span></span><br><span class="line">preds = []</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> tt_set: <span class="comment"># iterate through the dataloader</span></span><br><span class="line">    x = x.to(device) <span class="comment"># move data to device</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad(): <span class="comment"># disable gradient caculation</span></span><br><span class="line">        pred = model(x) <span class="comment"># forward pass (compute output)</span></span><br><span class="line">        preds.append(pred.cpu()) <span class="comment"># collect prediction</span></span><br></pre></td></tr></table></figure>
+<h2><span id="saveload-a-neural-network">Save/Load a Neural Network</span></h2><ul>
+<li>Save</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), path)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Load</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ckpt = torch.load(path)</span><br><span class="line">model.load_state_dict(ckpt)</span><br></pre></td></tr></table></figure>
+<h2><span id="more-about-pytorch">More about PyTorch</span></h2><ul>
+<li><p>torchaudio</p>
+<ul>
+<li>speech/audio processing</li>
+</ul>
+</li>
+<li><p>torchtext</p>
+<ul>
+<li>natural language processing</li>
+</ul>
+</li>
+<li><p>torchvision</p>
+<ul>
+<li>computer vision</li>
+</ul>
+</li>
+<li><p>skorch</p>
+<ul>
+<li>scikit-learn + pyTorch</li>
+</ul>
+</li>
+</ul>
+<p align="center">
+<img src="/.com//img2.png" width="90%">
+</p>
+
+
+
+<p>更多详细信息可以去看PyTorch的<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/">官方文档</a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Tutorial of Google Colab and PyTorch</p><p><a href="http://example.com/2021/09/17/Totorial-of-Google-Colab-and-Pytorch/">http://example.com/2021/09/17/Totorial-of-Google-Colab-and-Pytorch/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Yuzi Liang</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-09-17</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2021-10-24</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Machine-Learning/">Machine Learning</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/05/28/Lattice-Boltzmann-Method/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Lattice Boltzmann Method</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/08/28/Image-Generator-Application-and-Implementation-of-StyleGAN/"><span class="level-item">Image Generator: Application and Implementation of StyleGAN</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://example.com/2021/09/17/Totorial-of-Google-Colab-and-Pytorch/';
+            this.page.identifier = '2021/09/17/Totorial-of-Google-Colab-and-Pytorch/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'lyz' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-04-04T04:22:22.000Z">2023-04-03</time></p><p class="title"><a href="/2023/04/03/Diffusion-model/">Diffusion model</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-11-08T02:10:30.000Z">2022-11-07</time></p><p class="title"><a href="/2022/11/07/TensorFlow-Tutorial/">TensorFlow Tutorial</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-28T22:58:52.000Z">2022-05-28</time></p><p class="title"><a href="/2022/05/28/Lattice-Boltzmann-Method/">Lattice Boltzmann Method</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-09-18T01:47:06.000Z">2021-09-17</time></p><p class="title"><a href="/2021/09/17/Totorial-of-Google-Colab-and-Pytorch/">Tutorial of Google Colab and PyTorch</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-08-28T07:59:55.000Z">2021-08-28</time></p><p class="title"><a href="/2021/08/28/Image-Generator-Application-and-Implementation-of-StyleGAN/">Image Generator: Application and Implementation of StyleGAN</a></p><p class="categories"><a href="/categories/Project-Summary/">Project Summary</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Demo/"><span class="level-start"><span class="level-item">Demo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Learning-Notes/"><span class="level-start"><span class="level-item">Learning Notes</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/Project-Summary/"><span class="level-start"><span class="level-item">Project Summary</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Machine-Learning/"><span class="tag">Machine Learning</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Magnetics/"><span class="tag">Magnetics</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Monte-Carlo-Method/"><span class="tag">Monte Carlo Method</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PyTorch/"><span class="tag">PyTorch</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Selenium/"><span class="tag">Selenium</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TensorFlow/"><span class="tag">TensorFlow</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Thermoelectricity/"><span class="tag">Thermoelectricity</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Web-Crawler/"><span class="tag">Web Crawler</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a><p class="is-size-7"><span>&copy; 2023 Yuzi Liang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
