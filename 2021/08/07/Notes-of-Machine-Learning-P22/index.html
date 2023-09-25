@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Notes of Machine Learning(P22-P23) - Yuzi Liang | University of Science and Technology of China</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Yuzi Liang | University of Science and Technology of China"><meta name="msapplication-TileImage" content="/img/favicon2.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Yuzi Liang | University of Science and Technology of China"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Semi-supervised Learning Outline Semi-supervised Learning for Generative Model Supervised Generative Model Semi-supervised Generative Model Why?   Semi-supervised Learning Low-density Separation Sel"><meta property="og:type" content="blog"><meta property="og:title" content="Notes of Machine Learning(P22-P23)"><meta property="og:url" content="http://example.com/2021/08/07/Notes-of-Machine-Learning-P22/"><meta property="og:site_name" content="Yuzi Liang | University of Science and Technology of China"><meta property="og:description" content="Semi-supervised Learning Outline Semi-supervised Learning for Generative Model Supervised Generative Model Semi-supervised Generative Model Why?   Semi-supervised Learning Low-density Separation Sel"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/.com//sgm.png"><meta property="og:image" content="http://example.com/.com//ssgm.png"><meta property="og:image" content="http://example.com/.com//sh.png"><meta property="og:image" content="http://example.com/.com//xy.png"><meta property="og:image" content="http://example.com/.com//ebr.png"><meta property="og:image" content="http://example.com/.com//smsvm.png"><meta property="og:image" content="http://example.com/.com//sa.png"><meta property="og:image" content="http://example.com/.com//g.png"><meta property="og:image" content="http://example.com/.com//ke.png"><meta property="og:image" content="http://example.com/.com//sm.png"><meta property="og:image" content="http://example.com/.com//sm2.png"><meta property="og:image" content="http://example.com/.com//gl.png"><meta property="og:image" content="http://example.com/.com//sm3.png"><meta property="og:image" content="http://example.com/.com//wem.png"><meta property="og:image" content="http://example.com/.com//preb.png"><meta property="article:published_time" content="2021-08-07T23:00:37.000Z"><meta property="article:modified_time" content="2022-02-17T03:46:14.805Z"><meta property="article:author" content="Yuzi Liang"><meta property="article:tag" content="Machine Learning"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/.com//sgm.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2021/08/07/Notes-of-Machine-Learning-P22/"},"headline":"Yuzi Liang | University of Science and Technology of China","image":["http://example.com/.com//sgm.png","http://example.com/.com//ssgm.png","http://example.com/.com//sh.png","http://example.com/.com//xy.png","http://example.com/.com//ebr.png","http://example.com/.com//smsvm.png","http://example.com/.com//sa.png","http://example.com/.com//g.png","http://example.com/.com//ke.png","http://example.com/.com//sm.png","http://example.com/.com//sm2.png","http://example.com/.com//gl.png","http://example.com/.com//sm3.png","http://example.com/.com//wem.png","http://example.com/.com//preb.png"],"datePublished":"2021-08-07T23:00:37.000Z","dateModified":"2022-02-17T03:46:14.805Z","author":{"@type":"Person","name":"Yuzi Liang"},"description":"Semi-supervised Learning Outline Semi-supervised Learning for Generative Model Supervised Generative Model Semi-supervised Generative Model Why?   Semi-supervised Learning Low-density Separation Sel"}</script><link rel="canonical" href="http://example.com/2021/08/07/Notes-of-Machine-Learning-P22/"><link rel="icon" href="/img/favicon2.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Notes of Machine Learning(P22-P23) - Yuzi Liang | University of Science and Technology of China</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Yuzi Liang | University of Science and Technology of China"><meta name="msapplication-TileImage" content="/img/favicon2.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Yuzi Liang | University of Science and Technology of China"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Semi-supervised Learning Outline Semi-supervised Learning for Generative Model Supervised Generative Model Semi-supervised Generative Model Why?   Semi-supervised Learning Low-density Separation Sel"><meta property="og:type" content="blog"><meta property="og:title" content="Notes of Machine Learning(P22-P23)"><meta property="og:url" content="http://example.com/2021/08/07/Notes-of-Machine-Learning-P22/"><meta property="og:site_name" content="Yuzi Liang | University of Science and Technology of China"><meta property="og:description" content="Semi-supervised Learning Outline Semi-supervised Learning for Generative Model Supervised Generative Model Semi-supervised Generative Model Why?   Semi-supervised Learning Low-density Separation Sel"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/images/sgm.png"><meta property="og:image" content="http://example.com/images/ssgm.png"><meta property="og:image" content="http://example.com/images/sh.png"><meta property="og:image" content="http://example.com/images/xy.png"><meta property="og:image" content="http://example.com/images/ebr.png"><meta property="og:image" content="http://example.com/images/smsvm.png"><meta property="og:image" content="http://example.com/images/sa.png"><meta property="og:image" content="http://example.com/images/g.png"><meta property="og:image" content="http://example.com/images/ke.png"><meta property="og:image" content="http://example.com/images/sm.png"><meta property="og:image" content="http://example.com/images/sm2.png"><meta property="og:image" content="http://example.com/images/gl.png"><meta property="og:image" content="http://example.com/images/sm3.png"><meta property="og:image" content="http://example.com/images/wem.png"><meta property="og:image" content="http://example.com/images/preb.png"><meta property="article:published_time" content="2021-08-07T23:00:37.000Z"><meta property="article:modified_time" content="2023-09-25T21:29:12.381Z"><meta property="article:author" content="Yuzi Liang"><meta property="article:tag" content="Machine Learning"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/images/sgm.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2021/08/07/Notes-of-Machine-Learning-P22/"},"headline":"Yuzi Liang | University of Science and Technology of China","image":["http://example.com/images/sgm.png","http://example.com/images/ssgm.png","http://example.com/images/sh.png","http://example.com/images/xy.png","http://example.com/images/ebr.png","http://example.com/images/smsvm.png","http://example.com/images/sa.png","http://example.com/images/g.png","http://example.com/images/ke.png","http://example.com/images/sm.png","http://example.com/images/sm2.png","http://example.com/images/gl.png","http://example.com/images/sm3.png","http://example.com/images/wem.png","http://example.com/images/preb.png"],"datePublished":"2021-08-07T23:00:37.000Z","dateModified":"2023-09-25T21:29:12.381Z","author":{"@type":"Person","name":"Yuzi Liang"},"description":"Semi-supervised Learning Outline Semi-supervised Learning for Generative Model Supervised Generative Model Semi-supervised Generative Model Why?   Semi-supervised Learning Low-density Separation Sel"}</script><link rel="canonical" href="http://example.com/2021/08/07/Notes-of-Machine-Learning-P22/"><link rel="icon" href="/img/favicon2.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-08-07T23:00:37.000Z" title="8/7/2021, 4:00:37 PM">2021-08-07</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-02-17T03:46:14.805Z" title="2/16/2022, 7:46:14 PM">2022-02-16</time></span><span class="level-item"><a class="link-muted" href="/categories/Learning-Notes/">Learning Notes</a></span><span class="level-item">9 minutes read (About 1400 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">Notes of Machine Learning(P22-P23)</h1><div class="content"><!-- toc -->
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-08-07T23:00:37.000Z" title="8/7/2021, 4:00:37 PM">2021-08-07</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-09-25T21:29:12.381Z" title="9/25/2023, 2:29:12 PM">2023-09-25</time></span><span class="level-item"><a class="link-muted" href="/categories/Learning-Notes/">Learning Notes</a></span><span class="level-item">9 minutes read (About 1400 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">Notes of Machine Learning(P22-P23)</h1><div class="content"><!-- toc -->
 <ul>
 <li><a href="#semi-supervised-learning">Semi-supervised Learning</a><ul>
 <li><a href="#outline">Outline</a></li>
@@ -50,14 +50,16 @@
 <p>$\cdot$ Better Representation</p>
 <h2><span id="semi-supervised-learning-for-generative-model">Semi-supervised Learning for Generative Model</span></h2><h3><span id="supervised-generative-model">Supervised Generative Model</span></h3><p>每笔数据都有label,可以直接算出$\mu^i, \Sigma$</p>
 <center class="full">
-<img src="/.com//sgm.png" width="80%">
+<img src="/images/sgm.png" width="80%">
 </center>
+
 
 <p>如上图所示</p>
 <h3><span id="semi-supervised-generative-model">Semi-supervised Generative Model</span></h3><p>Unlabeled data也会对$\mu^i, \Sigma$产生影响</p>
 <center class="full">
-<img src="/.com//ssgm.png" width="80%">
+<img src="/images/ssgm.png" width="80%">
 </center>
+
 
 <p>步骤如下</p>
 <p>$\cdot$​ Initialization: $\theta = \{P(C_1),P(C_2),\mu^1,\mu^2,\Sigma\}$​</p>
@@ -90,17 +92,19 @@ P_\theta (x^u) = P_\theta (x^u|C_1)P(C_1) + P_\theta (x^u|C_2)P(C_2)</script><h3
 <p>​    Considering using neural network</p>
 <p>​    $\theta^*$ (network parameter) from labelled data</p>
 <center class="full">
-<img src="/.com//sh.png" width="80%">
+<img src="/images/sh.png" width="80%">
 </center>
+
 
 <p>soft效果不好,一般都用hard</p>
 <p>上述内容有进阶版 $\downarrow$</p>
 <p>$\bullet$ Entropy-based Regularization</p>
 <p>Output的distribution要很集中</p>
 <table><tr>
-<td align="center"><img src="/.com//xy.png" width="70%"></td>
-<td align="center"><img src="/.com//ebr.png"></td>
+<td align="center"><img src="/images/xy.png" width="70%"></td>
+<td align="center"><img src="/images/ebr.png"></td>
 </tr></table>
+
 
 
 <p>Entropy of $y^u$: Evaluate how concentrate the distribution $y^u$​ is</p>
@@ -112,8 +116,9 @@ L = \sum_{x^r}C(y^r,\hat{y}^r) + \lambda \sum_{x^u}E(y^u)</script><p>右边第�
 <p>除此之外,semi-supervised learning还有别的方法</p>
 <h4><span id="outlook-semi-supervised-svm">Outlook: Semi-supervised SVM</span></h4><p>穷举所有可能的情况</p>
 <p align="center">
-<img src="/.com//smsvm.png" width="80%">
+<img src="/images/smsvm.png" width="80%">
 </p>
+
 
 <p>取margin尽可能大的情况 (第二种)</p>
 <h3><span id="smoothness-assumption">Smoothness Assumption</span></h3><p>$\bullet$​ Assumption: “similar” $x$ has the same $\hat{y}$​</p>
@@ -121,16 +126,18 @@ L = \sum_{x^r}C(y^r,\hat{y}^r) + \lambda \sum_{x^u}E(y^u)</script><p>右边第�
 <p>​    $\cdot$ $x$​ is not uniform ($x$​的分布是不平均的,在某些地方很集中,某些地方又很分散)</p>
 <p>​    $\cdot$ If $x^1$ and $x^2$ are closed in a high density region, $\hat{y}^1$ and $\hat{y}^2$ are the same</p>
 <p align="center">
-<img src="/.com//sa.png" width="70%">
+<img src="/images/sa.png" width="70%">
 </p>
+
 
 <p>$x_1$和$x_2$通过一个high density的path相连</p>
 <p>应用: Classify astronomy v.s. travel articles</p>
 <h3><span id="graph-based-approach">Graph-based Approach</span></h3><p>$\bullet$​ How to know $x_1$ and $x_2$ are closed in a high density region (connected by a high density path)</p>
 <p>Represented the data points as a graph</p>
 <p align="center">
-<img src="/.com//g.png" width="55%">
+<img src="/images/g.png" width="55%">
 </p>
+
 
 <p>But how to build a graph?</p>
 <p>$\cdot$ Graph representation is nature sometimes.</p>
@@ -141,23 +148,26 @@ L = \sum_{x^r}C(y^r,\hat{y}^r) + \lambda \sum_{x^u}E(y^u)</script><p>右边第�
 <p>​    $\cdot$ K Nearest Neighbor</p>
 <p>​    $\cdot$ $e$​-Neighborhood</p>
 <p align="center">
-<img src="/.com//ke.png" width="55%">
+<img src="/images/ke.png" width="55%">
 </p>
+
 
 <p>$\bullet$ Edge weight is proportional to $s(x^i,x^j)$</p>
 <p>比较推荐的选择是Gaussian Radial Basis Function:</p>
 <script type="math/tex; mode=display">
 s(x^i,x^j) = exp(-\gamma ||x^i-x^j||^2)</script><p>$\bullet$ Define the smoothness of the labels on the graph</p>
 <p align="center">
-<img src="/.com//sm.png" width="55%">
+<img src="/images/sm.png" width="55%">
 </p>
+
 
 <p>显然左边的看起来更加smooth,不过最好是需要一个定量描述</p>
 <script type="math/tex; mode=display">
 S = \frac{1}{2}\sum_{i,j}w_{i,j}(y^i-y^j)^2</script><p>根据定义可以算得</p>
 <p align="center">
-<img src="/.com//sm2.png" width="55%">
+<img src="/images/sm2.png" width="55%">
 </p>
+
 
 <p>这个$S$值越小表示这个graph越光滑</p>
 <p>这个表达式还可以进一步简化</p>
@@ -167,8 +177,9 @@ S = \frac{1}{2}\sum_{i,j}w_{i,j}(y^i-y^j)^2 = \textbf{y}^TL\textbf{y}</script><p
 \textbf{y} = [...y^i...y^j]^T</script><p>$L$: (R+U)$\times$(R+U) matrix, 被称为Graph Laplacian</p>
 <script type="math/tex; mode=display">
 L = D -W</script><p align="center">
-<img src="/.com//gl.png" width="35%">
+<img src="/images/gl.png" width="35%">
 </p>
+
 
 
 <script type="math/tex; mode=display">
@@ -191,15 +202,17 @@ D =
 L = \sum_{x^r}C(y^r,\hat{y}^r) + \lambda S</script><p>然后按照Gradient Descent的方法Train就行了</p>
 <p>同时,这个smooth的要求并不一定是要在output layer,中间的hidden layer也可以有smooth的要求,最终就在Loss Function中加上这些项即可</p>
 <p align="center">
-<img src="/.com//sm3.png" width="35%">
+<img src="/images/sm3.png" width="35%">
 </p>
+
 
 <h1><span id="unsupervised-learning">Unsupervised Learning</span></h1><h2><span id="1-of-n-encoding">1-of-N Encoding</span></h2><p>每个word都用一个vector来表示,对应向量空间中的其中一个维度,但是会有如下缺点:</p>
 <p>一是vector需要的维度数量是所有可能出现的word的数量,一般来说会非常大.</p>
 <p>二是不能提供更多的分类信息,比如狗是[1 0 0 0 0],猫是[0 1 0 0 0],但是他们都属于动物,不能简单地从对应的向量中看出对应的关系.</p>
 <h2><span id="word-embedding">Word Embedding</span></h2><p align="center">
-<img src="/.com//wem.png" width="70%">
+<img src="/images/wem.png" width="70%">
 </p>
+
 
 
 
@@ -215,7 +228,7 @@ L = \sum_{x^r}C(y^r,\hat{y}^r) + \lambda S</script><p>然后按照Gradient Desce
 </li>
 <li><p>Prediction based</p>
 <p align="center">
-<img src="/.com//preb.png" width="70%">
+<img src="/images/preb.png" width="70%">
 </p>
 
 
@@ -258,7 +271,7 @@ L = \sum_{x^r}C(y^r,\hat{y}^r) + \lambda S</script><p>然后按照Gradient Desce
 
 </li>
 </ul>
-</div><div class="article-licensing box"><div class="licensing-title"><p>Notes of Machine Learning(P22-P23)</p><p><a href="http://example.com/2021/08/07/Notes-of-Machine-Learning-P22/">http://example.com/2021/08/07/Notes-of-Machine-Learning-P22/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Yuzi Liang</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-08-07</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2022-02-16</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Machine-Learning/">Machine Learning</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/08/28/Image-Generator-Application-and-Implementation-of-StyleGAN/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Image Generator: Application and Implementation of StyleGAN</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/07/22/Notes-of-Machine-Learning-P20/"><span class="level-item">Notes of Machine Learning(P20-P21)</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+</div><div class="article-licensing box"><div class="licensing-title"><p>Notes of Machine Learning(P22-P23)</p><p><a href="http://example.com/2021/08/07/Notes-of-Machine-Learning-P22/">http://example.com/2021/08/07/Notes-of-Machine-Learning-P22/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Yuzi Liang</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-08-07</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2023-09-25</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Machine-Learning/">Machine Learning</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/08/28/Image-Generator-Application-and-Implementation-of-StyleGAN/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Image Generator: Application and Implementation of StyleGAN</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/07/22/Notes-of-Machine-Learning-P20/"><span class="level-item">Notes of Machine Learning(P20-P21)</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
             this.page.url = 'http://example.com/2021/08/07/Notes-of-Machine-Learning-P22/';
             this.page.identifier = '2021/08/07/Notes-of-Machine-Learning-P22/';
         };

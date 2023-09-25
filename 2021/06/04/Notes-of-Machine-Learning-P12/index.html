@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Notes of Machine Learning(P12-P17) - Yuzi Liang | University of Science and Technology of China</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Yuzi Liang | University of Science and Technology of China"><meta name="msapplication-TileImage" content="/img/favicon2.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Yuzi Liang | University of Science and Technology of China"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Deep Learning Deep is Better? Modularization Gradient Descent - Intro of Backpropagation Chain Rule Backpropagation   Tips for Deep Learning Regularization Dropout     CNN(Convolutional Neural Netwo"><meta property="og:type" content="blog"><meta property="og:title" content="Notes of Machine Learning(P12-P17)"><meta property="og:url" content="http://example.com/2021/06/04/Notes-of-Machine-Learning-P12/"><meta property="og:site_name" content="Yuzi Liang | University of Science and Technology of China"><meta property="og:description" content="Deep Learning Deep is Better? Modularization Gradient Descent - Intro of Backpropagation Chain Rule Backpropagation   Tips for Deep Learning Regularization Dropout     CNN(Convolutional Neural Netwo"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/.com//db.png"><meta property="og:image" content="http://example.com/.com//fl.png"><meta property="og:image" content="http://example.com/.com//nn.png"><meta property="og:image" content="http://example.com/.com//jj.png"><meta property="og:image" content="http://example.com/.com//cb.png"><meta property="og:image" content="http://example.com/.com//fx.png"><meta property="og:image" content="http://example.com/.com//relu.png"><meta property="og:image" content="http://example.com/.com//beak.png"><meta property="og:image" content="http://example.com/.com//cnn.png"><meta property="og:image" content="http://example.com/.com//conv.png"><meta property="og:image" content="http://example.com/.com//p2.png"><meta property="og:image" content="http://example.com/.com//share.png"><meta property="og:image" content="http://example.com/.com//x.png"><meta property="og:image" content="http://example.com/.com//cmp.png"><meta property="og:image" content="http://example.com/.com//ak.png"><meta property="og:image" content="http://example.com/.com//ksh.png"><meta property="og:image" content="http://example.com/.com//di.png"><meta property="og:image" content="http://example.com/.com//08.png"><meta property="og:image" content="http://example.com/.com//c8.png"><meta property="article:published_time" content="2021-06-05T05:37:37.000Z"><meta property="article:modified_time" content="2021-10-24T12:29:14.426Z"><meta property="article:author" content="Yuzi Liang"><meta property="article:tag" content="Machine Learning"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/.com//db.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2021/06/04/Notes-of-Machine-Learning-P12/"},"headline":"Yuzi Liang | University of Science and Technology of China","image":["http://example.com/.com//db.png","http://example.com/.com//fl.png","http://example.com/.com//nn.png","http://example.com/.com//jj.png","http://example.com/.com//cb.png","http://example.com/.com//fx.png","http://example.com/.com//relu.png","http://example.com/.com//beak.png","http://example.com/.com//cnn.png","http://example.com/.com//conv.png","http://example.com/.com//p2.png","http://example.com/.com//share.png","http://example.com/.com//x.png","http://example.com/.com//cmp.png","http://example.com/.com//ak.png","http://example.com/.com//ksh.png","http://example.com/.com//di.png","http://example.com/.com//08.png","http://example.com/.com//c8.png"],"datePublished":"2021-06-05T05:37:37.000Z","dateModified":"2021-10-24T12:29:14.426Z","author":{"@type":"Person","name":"Yuzi Liang"},"description":"Deep Learning Deep is Better? Modularization Gradient Descent - Intro of Backpropagation Chain Rule Backpropagation   Tips for Deep Learning Regularization Dropout     CNN(Convolutional Neural Netwo"}</script><link rel="canonical" href="http://example.com/2021/06/04/Notes-of-Machine-Learning-P12/"><link rel="icon" href="/img/favicon2.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Notes of Machine Learning(P12-P17) - Yuzi Liang | University of Science and Technology of China</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Yuzi Liang | University of Science and Technology of China"><meta name="msapplication-TileImage" content="/img/favicon2.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Yuzi Liang | University of Science and Technology of China"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Deep Learning Deep is Better? Modularization Gradient Descent - Intro of Backpropagation Chain Rule Backpropagation   Tips for Deep Learning Regularization Dropout     CNN(Convolutional Neural Netwo"><meta property="og:type" content="blog"><meta property="og:title" content="Notes of Machine Learning(P12-P17)"><meta property="og:url" content="http://example.com/2021/06/04/Notes-of-Machine-Learning-P12/"><meta property="og:site_name" content="Yuzi Liang | University of Science and Technology of China"><meta property="og:description" content="Deep Learning Deep is Better? Modularization Gradient Descent - Intro of Backpropagation Chain Rule Backpropagation   Tips for Deep Learning Regularization Dropout     CNN(Convolutional Neural Netwo"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/images/db.png"><meta property="og:image" content="http://example.com/images/fl.png"><meta property="og:image" content="http://example.com/images/nn.png"><meta property="og:image" content="http://example.com/images/jj.png"><meta property="og:image" content="http://example.com/images/cb.png"><meta property="og:image" content="http://example.com/images/fx.png"><meta property="og:image" content="http://example.com/images/relu.png"><meta property="og:image" content="http://example.com/images/beak.png"><meta property="og:image" content="http://example.com/images/cnn.png"><meta property="og:image" content="http://example.com/images/conv.png"><meta property="og:image" content="http://example.com/images/p2.png"><meta property="og:image" content="http://example.com/images/share.png"><meta property="og:image" content="http://example.com/images/x.png"><meta property="og:image" content="http://example.com/images/cmp.png"><meta property="og:image" content="http://example.com/images/ak.png"><meta property="og:image" content="http://example.com/images/ksh.png"><meta property="og:image" content="http://example.com/images/di.png"><meta property="og:image" content="http://example.com/images/08.png"><meta property="og:image" content="http://example.com/images/c8.png"><meta property="article:published_time" content="2021-06-05T05:37:37.000Z"><meta property="article:modified_time" content="2023-09-25T21:30:40.714Z"><meta property="article:author" content="Yuzi Liang"><meta property="article:tag" content="Machine Learning"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/images/db.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2021/06/04/Notes-of-Machine-Learning-P12/"},"headline":"Yuzi Liang | University of Science and Technology of China","image":["http://example.com/images/db.png","http://example.com/images/fl.png","http://example.com/images/nn.png","http://example.com/images/jj.png","http://example.com/images/cb.png","http://example.com/images/fx.png","http://example.com/images/relu.png","http://example.com/images/beak.png","http://example.com/images/cnn.png","http://example.com/images/conv.png","http://example.com/images/p2.png","http://example.com/images/share.png","http://example.com/images/x.png","http://example.com/images/cmp.png","http://example.com/images/ak.png","http://example.com/images/ksh.png","http://example.com/images/di.png","http://example.com/images/08.png","http://example.com/images/c8.png"],"datePublished":"2021-06-05T05:37:37.000Z","dateModified":"2023-09-25T21:30:40.714Z","author":{"@type":"Person","name":"Yuzi Liang"},"description":"Deep Learning Deep is Better? Modularization Gradient Descent - Intro of Backpropagation Chain Rule Backpropagation   Tips for Deep Learning Regularization Dropout     CNN(Convolutional Neural Netwo"}</script><link rel="canonical" href="http://example.com/2021/06/04/Notes-of-Machine-Learning-P12/"><link rel="icon" href="/img/favicon2.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-06-05T05:37:37.000Z" title="6/4/2021, 10:37:37 PM">2021-06-04</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-10-24T12:29:14.426Z" title="10/24/2021, 5:29:14 AM">2021-10-24</time></span><span class="level-item"><a class="link-muted" href="/categories/Learning-Notes/">Learning Notes</a></span><span class="level-item">10 minutes read (About 1505 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">Notes of Machine Learning(P12-P17)</h1><div class="content"><!-- toc -->
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-06-05T05:37:37.000Z" title="6/4/2021, 10:37:37 PM">2021-06-04</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-09-25T21:30:40.714Z" title="9/25/2023, 2:30:40 PM">2023-09-25</time></span><span class="level-item"><a class="link-muted" href="/categories/Learning-Notes/">Learning Notes</a></span><span class="level-item">10 minutes read (About 1505 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">Notes of Machine Learning(P12-P17)</h1><div class="content"><!-- toc -->
 <ul>
 <li><a href="#deep-learning">Deep Learning</a><ul>
 <li><a href="#deep-is-better">Deep is Better?</a></li>
@@ -36,19 +36,16 @@
 <!-- tocstop -->
 <h1><span id="deep-learning">Deep Learning</span></h1><h2><span id="deep-is-better">Deep is Better?</span></h2><p>通常相同参数数量的情况下, Fat + Short 不如Thin + Tall 的效果好.</p>
 <center class="full">
-<img src="/.com//db.png" width="90%">
+<img src="/images/db.png" width="90%">
 </center>
-因为很tall,所以形象的有个deep learning的说法(DNN-Deep Neural Networks).
 
-## Modularization
-
-$\cdot$ Deep $\rightarrow$ Modularization
-
-相当于把整个的分类分成若干个小的分类:
-
+<p>因为很tall,所以形象的有个deep learning的说法(DNN-Deep Neural Networks).</p>
+<h2><span id="modularization">Modularization</span></h2><p>$\cdot$ Deep $\rightarrow$ Modularization</p>
+<p>相当于把整个的分类分成若干个小的分类:</p>
 <center class="full">
-<img src="/.com//fl.png" width="90%">
+<img src="/images/fl.png" width="90%">
 </center>
+
 
 <p>每层提取相应的attribute.</p>
 <p>开始两节课似乎都是简要介绍.接下来才有干货.</p>
@@ -73,34 +70,39 @@ $\cdot$ Deep $\rightarrow$ Modularization
 <script type="math/tex; mode=display">
 \frac{dz}{ds} = \frac{\partial z}{\partial x} \frac{dx}{ds} + \frac{\partial z}{\partial y} \frac{dy}{ds}</script><p>很基础的数学.</p>
 <center class="full">
-<img src="/.com//nn.png" width="50%">
+<img src="/images/nn.png" width="50%">
 </center>
+
 
 <script type="math/tex; mode=display">
 L(\theta) = \sum^N_{n = 1} C^n(\theta) \rightarrow \frac{\partial L(\theta)}{\partial w} = \sum_{n=1}^N \frac{\partial C^n(\theta)}{\partial w}</script><h3><span id="backpropagation">Backpropagation</span></h3><p>取其中一个节点分析:</p>
 <center class="full">
-<img src="/.com//jj.png" width="70%">
+<img src="/images/jj.png" width="70%">
 </center>
+
 
 <p>我们最终需要计算的是$\frac{\partial C}{\partial w}$,可以通过链式法则等效于计算$\frac{\partial z}{\partial w} \frac{\partial C}{\partial z}$.</p>
 <p>其中,计算$\frac{\partial z}{\partial w}$被称作Forward pass,计算$\frac{\partial C}{\partial z}$被称作Backward pass.</p>
 <p>$\frac{\partial z}{\partial w}$就是前一个节点的output,不需要额外计算.</p>
 <center class="full">
-<img src="/.com//cb.png" width="70%">
+<img src="/images/cb.png" width="70%">
 </center>
+
 
 <p>得到关系:</p>
 <script type="math/tex; mode=display">
 \frac{\partial C}{\partial z} = \sigma'(z)[w_3 \frac{\partial C}{\partial z'}+w_4 \frac{\partial C}{\partial z''}]</script><p>这是往前推一层的计算,如果有很多层,就逐层套公式即可.</p>
 <center class="full">
-<img src="/.com//fx.png" width="70%">
+<img src="/images/fx.png" width="70%">
 </center>
+
 
 <p>最终可以得到每个需要计算的偏导.</p>
 <h2><span id="tips-for-deep-learning">Tips for Deep Learning</span></h2><p>对于太深的网络,如果每个节点都用softmax会导致前面的层数”学习”的非常慢,可能后面的几层早就训练好了,但是前面的还没怎么动.解决办法是使用Rectified Linear Unit(ReLU).</p>
 <center class="full">
-<img src="/.com//relu.png" width="60%">
+<img src="/images/relu.png" width="60%">
 </center>
+
 
 <p>ReLU也有几种变种Leaky ReLU, Parametric ReLU.</p>
 <p>还有人提出了Maxout, ReLU可以看作Maxout的特殊情况(ReLU is a special cases of Maxout)</p>
@@ -114,37 +116,43 @@ L'(\theta) = L(\theta) + \lambda \frac{1}{2}||\theta||_1</script><h3><span id="d
 <h1><span id="cnnconvolutional-neural-networks">CNN(Convolutional Neural Networks)</span></h1><h2><span id="why-cnn-for-image">Why CNN for Image</span></h2><p>如果使用fully connected的neural networks往往需要太多的参数.所以可以人为滤掉一些用不上的weights.</p>
 <p>$\cdot$ Property 1. Some patterns are much smaller than the whole image.(A neuron does not have to see the whole image to discover the pattern, every neuron only need to connect to small region with less parameters)</p>
 <center class="full">
-<img src="/.com//beak.png" width="70%">
+<img src="/images/beak.png" width="70%">
 </center>
+
 
 <p>$\cdot$ Property 2. The same patterns appear in different regions.</p>
 <p>$\cdot$ Property 3. Subsampling the pixels will not change the object.</p>
 <h2><span id="the-whole-cnn">The whole CNN</span></h2><center class="full">
-<img src="/.com//cnn.png" width="70%">
+<img src="/images/cnn.png" width="70%">
 </center>
+
 
 
 
 <h3><span id="cnn-convolution">CNN-Convolution</span></h3><p>输入一个图像矩阵,我们有相应的若干个Filter,而这些Filter矩阵中的元素就是这个网络的参数.</p>
 <center class="full">
-<img src="/.com//conv.png" width="70%">
+<img src="/images/conv.png" width="70%">
 </center>
+
 
 <p>移动Filter依次做内积，得到结果也可以用一个矩阵表示.</p>
 <center class="full">
-<img src="/.com//p2.png" width="70%">
+<img src="/images/p2.png" width="70%">
 </center>
+
 
 <p>得到的值最大的地方就是特征出现的地方.做的这个处理实际上相当于是去掉了一些weight的neural network.比起fully connected的neural network来说参数更少.</p>
 <center class="full">
-<img src="/.com//share.png" width="70%">
+<img src="/images/share.png" width="70%">
 </center>
+
 
 <p>P.S. 对于彩色图片,相当于输入一个三维矩阵,高度为3(RGB三种颜色),Filter也是三维矩阵.</p>
 <h3><span id="cnn-max-pooling">CNN-Max Pooling</span></h3><p>缩小image的方法,在每个选定大小的区块中,只取他的最大值.</p>
 <center class="full">
-<img src="/.com//x.png" width="70%">
+<img src="/images/x.png" width="70%">
 </center>
+
 
 <p>Convolution $\rightarrow$ Max Pooling 的过程可以重复很多次.每次循环都会使图像的size变小.</p>
 <h3><span id="flatten">Flatten</span></h3><p>把feature map拉直.接着再丢进Fully Connected Feedforward network.</p>
@@ -155,8 +163,9 @@ L'(\theta) = L(\theta) + \lambda \frac{1}{2}||\theta||_1</script><h3><span id="d
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.add(MaxPooling2D((<span class="number">2</span>, <span class="number">2</span>)))</span><br></pre></td></tr></table></figure>
 <p>这一步是Max Pooling,每次取$2 \times 2$的矩阵中的最大值.</p>
 <p align="center">
-<img src="/.com//cmp.png" width="70%">
+<img src="/images/cmp.png" width="70%">
 </p>
+
 
 <p>做Convolution之前,input的dimension是$1 \times 28 \times 28$,做一次Convolution之后维度是$25 \times 25 \times 26$.因为有25个Filter.做Max Pooling之后维度是$25 \times 13 \times 13$,因为$2 \times 2$的范围选择相当于每个维度大小除以2.对于每个Filter的参数数量,第一次Convolution的时候是$3 \times 3 = 9$,第二次Convolution的Filter是50个$3 \times 3$的矩阵,此时每个Filter的参数数量为$25 \times 9 = 225$(深度为25).</p>
 <p>在实操的时候发现这些个函数的语法都变了,Convolution2D改成了Conv2D之类的.具体怎么操作还是及时去看官方文档更好一点.</p>
@@ -164,32 +173,34 @@ L'(\theta) = L(\theta) + \lambda \frac{1}{2}||\theta||_1</script><h3><span id="d
 </script><h2><span id="what-does-cnn-learn">What does CNN learn?</span></h2><script type="math/tex; mode=display">
 </script><p>定义. Degree of  the activation of the k-th filter: $a^k = \sum^{11}_{i = 1} \sum^{11}_{j = 1}a^k_{ij}$</p>
 <center class="full">
-<img src="/.com//ak.png" width="50%">
+<img src="/images/ak.png" width="50%">
 </center>
+
 
 <p>用gradient ascent寻找:</p>
 <script type="math/tex; mode=display">
 x^* = arg \ \mathop{\rm{max}}_x a^k</script><p>当输入为$x$时,特定的filter其中的某一层会最活跃.这里例举了某个filter的前12层例子,可以给我们提供可视化的信息.(寻找让卷积核最大激活的一个$x$)</p>
 <center class="full">
-<img src="/.com//ksh.png" width="50%">
+<img src="/images/ksh.png" width="50%">
 </center>
-对于Flatten之后的神经网络,如果我们使得
-$$
-x^* = arg \ \mathop{\rm{max}}_x y^i
-$$
 
-<center class="full">
-<img src="/.com//di.png" width="20%">
+<p>对于Flatten之后的神经网络,如果我们使得</p>
+<script type="math/tex; mode=display">
+x^* = arg \ \mathop{\rm{max}}_x y^i</script><center class="full">
+<img src="/images/di.png" width="20%">
 </center>
+
 
 <p>我们是不是能看到对应的数字?答案是并不会.</p>
-<p><center class="full">
-<img src="/.com//08.png" width="40%">
-</center><br>想找个办法使得这个图看起来像数字.考虑:</p>
+<center class="full">
+<img src="/images/08.png" width="40%">
+</center>
+
+<p>想找个办法使得这个图看起来像数字.考虑:</p>
 <script type="math/tex; mode=display">
 x^* = arg \ \mathop{\rm{max}}_x (y^i - \sum_{i,j}|x_{ij}|)</script><p>添加了一项惩罚项,也就是说我们希望大部分的地方是没有涂颜色的.</p>
 <p><center class="full">
-<img src="/.com//c8.png" width="40%">
+<img src="/images/c8.png" width="40%">
 </center><br>(其实感觉还是一般)</p>
 <p>老师最后给了几个更好的,利用机器学习生成图片的方法:</p>
 <p>$\cdot$ PixelRNN</p>
@@ -198,7 +209,7 @@ x^* = arg \ \mathop{\rm{max}}_x (y^i - \sum_{i,j}|x_{ij}|)</script><p>添加了�
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1312.6114">https://arxiv.org/abs/1312.6114</a></p>
 <p>$\cdot$ Generative Adversarial Network (GAN)</p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1406.2661">https://arxiv.org/abs/1406.2661</a></p>
-</div><div class="article-licensing box"><div class="licensing-title"><p>Notes of Machine Learning(P12-P17)</p><p><a href="http://example.com/2021/06/04/Notes-of-Machine-Learning-P12/">http://example.com/2021/06/04/Notes-of-Machine-Learning-P12/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Yuzi Liang</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-06-04</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2021-10-24</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Machine-Learning/">Machine Learning</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/06/24/Notes-of-Machine-Learning-P18/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Notes of Machine Learning(P18-P19)</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/05/24/Enhancing-Anime/"><span class="level-item">Enhancing Anime</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+</div><div class="article-licensing box"><div class="licensing-title"><p>Notes of Machine Learning(P12-P17)</p><p><a href="http://example.com/2021/06/04/Notes-of-Machine-Learning-P12/">http://example.com/2021/06/04/Notes-of-Machine-Learning-P12/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Yuzi Liang</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-06-04</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2023-09-25</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Machine-Learning/">Machine Learning</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/06/24/Notes-of-Machine-Learning-P18/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Notes of Machine Learning(P18-P19)</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/05/24/Enhancing-Anime/"><span class="level-item">Enhancing Anime</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
             this.page.url = 'http://example.com/2021/06/04/Notes-of-Machine-Learning-P12/';
             this.page.identifier = '2021/06/04/Notes-of-Machine-Learning-P12/';
         };
