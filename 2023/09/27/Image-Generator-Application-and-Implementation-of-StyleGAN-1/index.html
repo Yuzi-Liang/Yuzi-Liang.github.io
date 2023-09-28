@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Image Generator: Application and Implementation of StyleGAN - Yuzi Liang | University of Science and Technology of China</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Yuzi Liang | University of Science and Technology of China"><meta name="msapplication-TileImage" content="/img/favicon2.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Yuzi Liang | University of Science and Technology of China"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Image Generator: Application and Implementation of StyleGAN I. Project Introduction II. Project Goals 1. Project Goals 2. Basic Principles and Models 2.1 Maximum Likelihood Estimation 2.2 Basic Prin"><meta property="og:type" content="blog"><meta property="og:title" content="Image Generator: Application and Implementation of StyleGAN"><meta property="og:url" content="http://example.com/2023/09/27/Image-Generator-Application-and-Implementation-of-StyleGAN-1/"><meta property="og:site_name" content="Yuzi Liang | University of Science and Technology of China"><meta property="og:description" content="Image Generator: Application and Implementation of StyleGAN I. Project Introduction II. Project Goals 1. Project Goals 2. Basic Principles and Models 2.1 Maximum Likelihood Estimation 2.2 Basic Prin"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/images/1cv.png"><meta property="og:image" content="http://example.com/images/2cv.png"><meta property="og:image" content="http://example.com/images/3cv.png"><meta property="og:image" content="http://example.com/images/4cv.png"><meta property="og:image" content="http://example.com/images/5cv.png"><meta property="og:image" content="http://example.com/images/pixiv.png"><meta property="og:image" content="http://example.com/images/onedrive.png"><meta property="og:image" content="http://example.com/images/face.png"><meta property="og:image" content="http://example.com/images/gan1.jpg"><meta property="og:image" content="http://example.com/images/gan2.jpg"><meta property="article:published_time" content="2023-09-28T00:13:37.000Z"><meta property="article:modified_time" content="2023-09-28T00:51:56.190Z"><meta property="article:author" content="Yuzi Liang"><meta property="article:tag" content="Machine Learning"><meta property="article:tag" content="Web Crawler"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/images/1cv.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2023/09/27/Image-Generator-Application-and-Implementation-of-StyleGAN-1/"},"headline":"Yuzi Liang | University of Science and Technology of China","image":["http://example.com/images/1cv.png","http://example.com/images/2cv.png","http://example.com/images/3cv.png","http://example.com/images/4cv.png","http://example.com/images/5cv.png","http://example.com/images/pixiv.png","http://example.com/images/onedrive.png","http://example.com/images/face.png","http://example.com/images/gan1.jpg","http://example.com/images/gan2.jpg"],"datePublished":"2023-09-28T00:13:37.000Z","dateModified":"2023-09-28T00:51:56.190Z","author":{"@type":"Person","name":"Yuzi Liang"},"description":"Image Generator: Application and Implementation of StyleGAN I. Project Introduction II. Project Goals 1. Project Goals 2. Basic Principles and Models 2.1 Maximum Likelihood Estimation 2.2 Basic Prin"}</script><link rel="canonical" href="http://example.com/2023/09/27/Image-Generator-Application-and-Implementation-of-StyleGAN-1/"><link rel="icon" href="/img/favicon2.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2023-09-28T00:13:37.000Z" title="9/27/2023, 5:13:37 PM">2023-09-27</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-09-28T00:51:56.190Z" title="9/27/2023, 5:51:56 PM">2023-09-27</time></span><span class="level-item"><a class="link-muted" href="/categories/Project-Summary/">Project Summary</a></span><span class="level-item">24 minutes read (About 3628 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">Image Generator: Application and Implementation of StyleGAN</h1><div class="content"><!-- toc -->
+<ul>
+<li><a href="#image-generator-application-and-implementation-of-stylegan">Image Generator: Application and Implementation of StyleGAN</a><ul>
+<li><a href="#i-project-introduction">I. Project Introduction</a></li>
+<li><a href="#ii-project-goals">II. Project Goals</a><ul>
+<li><a href="#1-project-goals">1. Project Goals</a></li>
+<li><a href="#2-basic-principles-and-models">2. Basic Principles and Models</a><ul>
+<li><a href="#21-maximum-likelihood-estimation">2.1 Maximum Likelihood Estimation</a></li>
+<li><a href="#22-basic-principle-of-gan">2.2 Basic Principle of GAN</a></li>
+<li><a href="#23-stylegans-optimization-for-face-generation">2.3 StyleGAN’s Optimization for Face Generation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#iii-project-implementation">III. Project Implementation</a><ul>
+<li><a href="#1-web-scraping">1. Web Scraping</a><ul>
+<li><a href="#11-pixiv">1.1 Pixiv</a><ul>
+<li><a href="#111-getinfopy">1.1.1 getInfo.py</a></li>
+<li><a href="#112-findpidpy">1.1.2 findPID.py</a></li>
+<li><a href="#113-findfollowpy">1.1.3 findFollow.py</a></li>
+<li><a href="#114-mainpy">1.1.4 main.py</a></li>
+</ul>
+</li>
+<li><a href="#12-konachan">1.2 Konachan</a></li>
+</ul>
+</li>
+<li><a href="#2-face-extraction">2. Face Extraction</a></li>
+<li><a href="#3-deploying-the-environment-and-running-the-code">3. Deploying the Environment and Running the Code</a><ul>
+<li><a href="#environment-deployment-on-the-first-computer">Environment Deployment on the First Computer</a></li>
+</ul>
+</li>
+<li><a href="#environment-deployment-on-the-second-computer">Environment Deployment on the Second Computer</a></li>
+</ul>
+</li>
+<li><a href="#iv-result-presentation">IV: Result Presentation</a></li>
+<li><a href="#v-further-discussion-on-gan">V: Further Discussion on GAN</a><ul>
+<li><a href="#advantages-of-gan">Advantages of GAN</a></li>
+<li><a href="#disadvantages-of-gan">Disadvantages of GAN</a></li>
+<li><a href="#applications-of-gan">Applications of GAN</a></li>
+<li><a href="#concerns-raised-by-gan-harm">Concerns Raised by GAN (Harm)</a></li>
+</ul>
+</li>
+<li><a href="#vi-summary-of-this-project">VI: Summary of This Project</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h1><span id="image-generator-application-and-implementation-of-stylegan">Image Generator: Application and Implementation of StyleGAN</span></h1><p>*note: This blog is an English version of previous blog.</p>
+<h2><span id="i-project-introduction">I. Project Introduction</span></h2><p> Deep learning is one of the most significant breakthroughs in the field of artificial intelligence in the past decade. It has achieved immense success in many fields such as speech recognition, natural language processing, computer vision, image and video analysis, multimedia, and more. Among these, the Generative Adversarial Networks (GAN) model is one of the most promising methods for unsupervised learning on complex distributions in recent years. It is widely used in image generation and recognition areas, such as neural style transfer, Google’s developed Deep Dream algorithm, and variational autoencoders.</p>
+<p> Recently in the field of anime drawing, attempts have been made to use machine learning to create 2D anime images, thereby replacing traditional hand-drawing and 3-to-2 conversions, which are more labor-intensive and time-consuming. Cinnamon AI has begun to offer automatic coloring features for anime, capable of completing certain pre-processing tasks like filling in missing lines in sketches and automatic coloring, reducing the time required for coloring single images by 1/10 and cutting costs by over 50%. This lessens the workload for artists and enhances productivity for anime creators. ATD-12K is a large-scale dataset for animation triplets that can automatically generate image in-betweening between two images, significantly reducing costs and production time for animators while ensuring animation quality. Although these technologies have not been widely applied in animation yet, it is certain that as machine learning models continue to improve and train, deep learning-generated anime images replacing manual drawings is an inevitable trend. Future artists will not need to spend a significant amount of time designing characters and painstakingly drawing each frame for smooth animation. They will only need some simple sketches and some key frames for animation shots. The rest can be left to deep learning models to complete the animation. When the work of drawing and animation is no longer a major production cost and time factor, it will not only drive the development of the anime industry but also accelerate the growth in movies, games, and many more fields requiring visual images.</p>
+<p> In this article, we will use the StyleGAN deep learning model for training, achieving results of random anime character portraits by inputting random seeds. With existing reference codes for this model, the key points lie in setting up the Python environment, creating a large and suitable training set, and adjusting the initial parameters.</p>
+<h2><span id="ii-project-goals">II. Project Goals</span></h2><h3><span id="1-project-goals">1. Project Goals</span></h3><p>The purpose of this project is to generate a suitable training set, use the StyleGAN deep learning model for training, and randomly generate anime character avatar images.</p>
+<h3><span id="2-basic-principles-and-models">2. Basic Principles and Models</span></h3><h4><span id="21-maximum-likelihood-estimation">2.1 Maximum Likelihood Estimation</span></h4><p>Before understanding the principle of GAN image generation, let’s start with maximum likelihood estimation. We use $P(x,\theta)$ to represent the probability distribution of each sample x, where $\theta$ represents the parameters of this distribution. The problem that maximum likelihood estimation needs to solve is that given a data distribution $P_{data}(x)$ and a data distribution $P_{G}(x,\theta)$ defined by parameters $\theta$, we hope to find the parameter $\theta$ that makes $P_{G}(x,\theta)$ as close as possible to $P_{data}(x)$. Therefore, in image generation, the collection of grayscale values of each pixel and each channel of the pictures in our imported training set is equivalent to a data distribution $P_{data}(x)$. What we have to do is to find a $P_{G}(x,\theta)$ to approximate this distribution, so that when we randomly substitute the parameter $\theta$ value, it is equivalent to generating a new picture similar to but not repeated from the dataset.</p>
+<p>The key is how to obtain the parameter $\theta$, theoretically it requires three steps:</p>
+<ol>
+<li><p>Sample m samples {$x^1,x^2,…,x^m$} from $P_{data}(x)$</p>
+</li>
+<li><p>Calculate the likelihood function of the sampled sample $L=\prod_{i=1}^m P_G(x^i;\theta)$</p>
+</li>
+<li><p>Calculate the parameter $\theta$ that makes the likelihood function $L$ the largest: $\theta^{*}={\underset{\theta}{\operatorname{arg\,max}}}\ L={\underset{\theta}{\operatorname{arg\,max}}}\prod_{i=1}^m P_G(x^i;\theta)$</p>
+</li>
+</ol>
+<p>We continue the calculation of the above formula:<br>$<br>\begin{aligned}<br>\theta^*&amp;={\underset{\theta}{\operatorname{arg\,max}}}\ L \\<br>&amp;\approx {\underset{\theta}{\operatorname{arg\,max}}}\ E_{x\backsim P_{data}}[\operatorname{log}P_G(x;\theta)]\\<br>&amp;={\underset{\theta}{\operatorname{arg\,max}}}\ \int_x P_{data}(x)\operatorname{log}P_G(x;\theta)dx-\int_x P_{data}(x)\operatorname{log}P_{data}(x)dx\\<br>&amp;={\underset{\theta}{\operatorname{arg\,min}}}\ KL(P_{data}(x)||P_G(x;\theta))<br>\end{aligned}<br>$<br>       Here we use the KL divergence: KL(P||Q), a method to measure the difference between the two probability distributions P and Q:<br>$<br>KL(P||Q)=\int_x p(x)(\operatorname{log}p(x)-\operatorname{log}q(x))<br>$<br>       That is, we find a $\theta$ so that the KL divergence of $P_G(x;\theta)$ and the target distribution $P_{data}(x)$ is as low as possible, which can determine the parameter $\theta$.</p>
+<h4><span id="22-basic-principle-of-gan">2.2 Basic Principle of GAN</span></h4><p>Knowing the help of maximum likelihood estimation for image generation, GAN is essentially doing the work of maximum likelihood estimation. We hope that we can use a specific distribution form $P_G(x;\theta)$ to express the distribution $P_{data}(x)$ as realistically as possible, so that we have obtained $P_{data}(x)$, and sample according to this distribution $P_G(x;\theta)$, that is, perform generation tasks. Since neural networks have strong fitting capabilities, we design a neural network G to obtain a more general $P_G(x;\theta)$. The general structure diagram is as follows:</p>
+<center class="full">
+<img src="/images/1cv.png" width="80%">
+</center>
+We first select a simple prior distribution $P_{prior}$, and sample $z$ from this prior distribution as input, input to the neural network $G$, and get $G(z)=x$ to generate the image $x$. In this way, we have constructed the generation distribution $P_{G}{x;\theta}$. At this time, this distribution is mainly determined by the neural network $G$, the parameter $\theta$ is defined by the network parameters, and we can sample $x$ on this distribution by inputting $z$. Similar to maximum likelihood estimation, we design loss to adjust and optimize the parameters $\theta$ of the neural network $G$ by comparing the differences between the two distribution samples, thereby realizing the effect of fitting and expressing $P_{data}$ with $P_G$. However, it is impossible to directly calculate the $\theta$ value, and we need to use GAN to help us fit at this time.
+
+GAN consists of a generator G and a discriminator D. The previous paragraph is actually the work done by the generator G, that is, G is a function, input $z\backsim P_{prior}$, output $x\backsim P_G$. The role of the discriminator D is to evaluate the difference between $P_G(x,\theta)$ and $P_{data}(x)$, essentially also a function, input $x\backsim P_G$, output a value to measure the difference. The final goal of GAN is expressed in symbolic language as:
+$
+G^*=\operatorname{arg}\ {\underset{G}{\operatorname{min}}}\ {\underset{D}{\operatorname{max}}}\ V(G,D)
+$
+Our goal is to get the generator $G^*$ that minimizes the formula ${\underset{D}{\operatorname{max}}}\ V(G,D)$.
+
+About $V$:
+$
+V(G,D)=E_{x\backsim P_{data}}[\operatorname{log}D(x)]+E_{x\backsim P_{G}}[1-\operatorname{log}D(x)]
+$
+So how can we optimize to get $G^*$? Here it can be achieved by gradient descent:
+$
+\theta_G \rightarrow \theta_G -\eta \frac{\partial L(G)}{\partial \theta_G}
+$
+
+Where $ L(G) = {\underset{D}{\operatorname{max}}}\ V(G,D) = V^\star(G,D^\star) $ .
+
+We regard D as a binary classifier, so if D is determined, we can use gradient descent to optimize the final parameters of D. We can rewrite $ {\underset{D}{\operatorname{max}}}\ V(G,D) $ from expected value calculation to sample calculation (approximate estimation):
+$
+\tilde{V}=\frac{1}{m}\sum_{i=1}^{m}\operatorname{log}D(x^i)+\frac{1}{m}\sum_{i=1}^{m}\operatorname{log}(1-D(\tilde{x^i}))
+$
+So the final algorithm flow of GAN is:
+
+1. Initialize parameters $\theta_D$ and $\theta_G$
+
+2. Learn to optimize the discriminator D:
+
+    $\cdot$ Sample {$x^1,x^2,...,x^m$} from $P_{data}(x)$
+
+    $\cdot$Sample {$z^1,z^2,...,z^m$} from $P_{prior}(z)$
+
+    $\cdot$Get the generated sample {$\tilde{x^1},\tilde{x^2},...,\tilde{x^m}$} through the generator $\tilde{x^i}=G(z^i)$
+
+    $\cdot$Use gradient descent to update $\theta_D$ to maximize $\tilde{V}=\frac{1}{m}\sum_{i=1}^{m}\operatorname{log}D(x^i)+\frac{1}{m}\sum_{i=1}^{m}\operatorname{log}(1-D(\tilde{x^i}))$
+
+3. Learn to optimize the generator G:
+
+    $\cdot$Sample another group {$z^1,z^2,...,z^m$} from $P_{prior}(z)$ again
+
+    $\cdot$Use gradient descent to update $\theta_G$ to minimize $\tilde{V}=\frac{1}{m}\sum_{i=1}^{m}\operatorname{log}D(x^i)+\frac{1}{m}\sum_{i=1}^{m}\operatorname{log}(1-D(G(z^i)))$
+
+Let's move to the next part.
+
+
+#### 2.3 StyleGAN's Optimization for Face Generation
+
+
+Paper: [[1812.04948\] A Style-Based Generator Architecture for Generative Adversarial Networks (arxiv.org)](https://arxiv.org/abs/1812.04948)
+
+StyleGAN introduces a new generator architecture that claims to control high-level attributes of the generated images, such as hairstyles, freckles, etc., and the generated images score better on some evaluation standards, which is why we finally chose this model. It has the following improvements compared to traditional GAN:
+
+(1) Style-based generator
+
+Unlike the common practice of directly inputting the latent code into the input layer of the generator, this model discards the input layer and instead adds a nonlinear mapping network: $f:Z\rightarrow W$, as shown below:
+
+<center class="full">
+<img src="/images/2cv.png" width="80%">
+</center>
+
+<p>In the figure, both <code>z</code> and <code>w</code> are 512-dimensional, <code>A</code> is an affine transform, <code>B</code> is the coefficient of Gaussian noise for each channel, and <code>AdaIN</code> is:</p>
+<center class="full">
+<img src="/images/3cv.png" width="60%">
+</center>
+
+<p>In the figure, $y(s,i)$ and $y(b,i)$ are $y=(y_s,y_b),(y(s,i),y(b,i))$ pairs obtained after <code>w</code> is transformed by <code>A</code>. The number of pairs is the same as the number of channels in each layer of the feature map.</p>
+<p>(2) Style mixing</p>
+<p>To further encourage these <code>styles</code> to localize their control effects, the author also adopted <code>mixing regularization</code>. In the eight-layer convolutional nonlinear transformation of the style-based generator, the transformation results of two images, $w_1$ and $w_2$, are calculated in advance, and then the values of $w_1$ or $w_2$ are randomly taken for operation during generation. As shown below:</p>
+<center class="full">
+<img src="/images/4cv.png" width="80%">
+</center>
+
+<p>(3) Stochastic variation</p>
+<p>Humans have many random attributes, such as hair, beard, freckles, etc., so a good generator naturally needs to achieve stochastic variation. The authors of this paper believe that the input of traditional generators is only the input layer, so the generator itself must find a way to generate pseudorandom numbers, which will consume the network’s <code>capacity</code>, and it is difficult to hide the periodicity of the generated signals. At this time, the Gaussian noise input <code>B</code> of this model comes in handy. As shown below:</p>
+<center class="full">
+<img src="/images/5cv.png" width="80%">
+</center>
+
+<h2><span id="iii-project-implementation">III. Project Implementation</span></h2><p>The project is mainly divided into three steps: crawling images, cropping the face part, and deploying the environment to run the code.</p>
+<h3><span id="1-web-scraping">1. Web Scraping</span></h3><h4><span id="11-pixiv">1.1 Pixiv</span></h4><p><a target="_blank" rel="noopener" href="https://www.pixiv.net">Pixiv</a> is an illustration sharing website. However, in most cases, directly searching for tags can only yield results sorted by time, which are usually uneven, and it’s hard to see high-quality works:</p>
+<center class="full">
+<img src="/images/pixiv.png" width="50%">
+</center>
+
+<p>Sorting by popularity requires a paid membership, which is not cost-effective, so I wrote multiple crawling strategies. The final project includes four programs: findPID.py, findFollow.py, getInfo.py, main.py.</p>
+<p>The included functions include crawling illustrations with a specified id, crawling works by author id, crawling daily, weekly, and monthly rankings, crawling works of publicly followed artists, crawling works of quietly followed artists, etc. Of course, the followed artists and cookies used in the program are related. If needed, you can replace them with your own cookies.</p>
+<h5><span id="111-getinfopy">1.1.1 getInfo.py</span></h5><p>Let me introduce the function of each function one by one</p>
+<p><em>GetLike(id)</em></p>
+<p>Input the work id and return the number of likes for this work</p>
+<p><em>GetBookmark(id)</em></p>
+<p>Input the work id and return the number of bookmarks for this work</p>
+<p><em>GetView(id)</em></p>
+<p>Input the work id and return the number of views for this work</p>
+<p><em>getHideFollow()</em></p>
+<p>Returns a list of quietly followed artist ids</p>
+<p><em>getShowFollow()</em></p>
+<p>Returns a list of publicly followed artist ids</p>
+<h5><span id="112-findpidpy">1.1.2 findPID.py</span></h5><p><em>findPIDs_by_Author(pid)</em></p>
+<p>Enter the author id and return the list of all illustration ids of this author</p>
+<p><em>findPIDs_by_Daily()</em></p>
+<p>Returns the list of all ids in today’s daily ranking</p>
+<p><em>findPIDs_by_Weekly()</em></p>
+<p>Returns the list of all ids in today’s weekly ranking</p>
+<p><em>findPIDs_by_Monthly()</em></p>
+<p>Returns the list of all ids in today’s monthly ranking</p>
+<p><em>findPIDs_by_Male()</em></p>
+<p>Returns the list of all ids in today’s male daily ranking</p>
+<p><em>findPIDs_by_Female()</em></p>
+<p>Returns the list of all ids in today’s female daily ranking</p>
+<p><em>findPIDs_by_Tag()</em></p>
+<p>You need to input the search mode, tag number, and tag, and return the list of all work ids under this tag search (Note: Pixiv search display has a limit of 60k images, so works from too long ago cannot be searched)</p>
+<p><em>findPIDs_by_Tag_sort()</em></p>
+<p>Similar to the previous function, the difference is that the results are sorted, which can be sorted by the number of bookmarks, likes, views, equivalent to manually unlocking the function of sorting by popularity, but it takes longer.</p>
+<h5><span id="113-findfollowpy">1.1.3 findFollow.py</span></h5><p><em>findFollow(mode)</em></p>
+<p>Enter mode, 1 represents publicly followed, 2 represents quietly followed, return the list of followed artist ids</p>
+<h5><span id="114-mainpy">1.1.4 main.py</span></h5><p>In general, just run this program, there will be detailed guidance.</p>
+<h4><span id="12-konachan">1.2 Konachan</span></h4><p><a target="_blank" rel="noopener" href="http://konachan.net/">Konachan</a> is also an illustration sharing website. Directly modify the start and end pages to be crawled in lines 40 and 41 of the code. Just run it directly.</p>
+<p>Then the two programs are deployed on the vultr server, mainly because it can directly connect to pixiv, use rclone to mount my OneDrive, and save the crawled pictures in OneDrive. In the end, you can get nearly 400G of pictures.</p>
+<center class="full">
+<img src="/images/onedrive.png" width="60%">
+</center>
+
+<h3><span id="2-face-extraction">2. Face Extraction</span></h3><p>This step references the project on GitHub: <a target="_blank" rel="noopener" href="https://github.com/nagadomi/lbpcascade_animeface">https://github.com/nagadomi/lbpcascade_animeface</a></p>
+<p>Finally, 20,000 face images were extracted and shared on OneDrive: <a target="_blank" rel="noopener" href="https://1drv.ms/u/s!AkFaXpu1Wty9k4NmlYU2rER15Au8QA?e=GxjwqY">https://1drv.ms/u/s!AkFaXpu1Wty9k4NmlYU2rER15Au8QA?e=GxjwqY</a></p>
+<center class="full">
+<img src="/images/face.png" width="70%">
+</center>
+
+
+<h3><span id="3-deploying-the-environment-and-running-the-code">3. Deploying the Environment and Running the Code</span></h3><p>Two GitHub projects were run on two computers respectively.</p>
+<h4><span id="environment-deployment-on-the-first-computer">Environment Deployment on the First Computer</span></h4><p>Referencing the GitHub source code: <a target="_blank" rel="noopener" href="https://github.com/NVlabs/stylegan2.git">https://github.com/NVlabs/stylegan2.git</a></p>
+<p>Computer used: Windows 10, Graphics card: NVDIA GeForce GTX 1060</p>
+<p>Python version: 3.6.13</p>
+<p>Packages used: See the attached requirments1.txt file.</p>
+<p>Basic steps: Install Git, get the project source code from GitHub, install VS2017 (2017 version), install CUDA and cuDNN, install Anaconda, create a virtual environment, modify the path of Windows environment variables, run from the command line terminal.</p>
+<p><strong>1 Install git</strong>   <a target="_blank" rel="noopener" href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></p>
+<p><strong>2 Get the source code</strong>   Create a project folder, use the cd command to enter the folder, and input the following code to get it</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/NVlabs/stylegan2.git</span><br></pre></td></tr></table></figure>
+<p><strong>3 Install VS2017</strong>  <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/visualstudio/releasenotes/vs2017-relnotes">https://docs.microsoft.com/en-us/visualstudio/releasenotes/vs2017-relnotes</a></p>
+<p><strong>4 Install CUDA and cuDNN</strong>  </p>
+<p>Because deep learning is best to use GPU participation (which can improve the computation speed), and CUDA (Compute Unified Device Architecture) can achieve the cooperative processing of CPU and GPU, it needs to be downloaded.</p>
+<p>Due to the limitations of the source code of the project referenced in this article, CUDA10.0 version needs to be downloaded. The download address is: <a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-10.0-download-archive">https://developer.nvidia.com/cuda-10.0-download-archive</a>;</p>
+<p>The download address for Cudnn is: <a target="_blank" rel="noopener" href="https://developer.nvidia.com/rdp/cudnn-archive">https://developer.nvidia.com/rdp/cudnn-archive</a>. Choose cuDNNv7.5.0 for CUDA10.0 Windows10 version, and copy the downloaded files to the same name directory of CUDA.</p>
+<p><strong>5 Anaconda installation</strong> </p>
+<p>Anaconda includes more than 180 scientific packages such as conda, Python, and their dependencies. The conda in it can install different versions of software packages and their dependencies on the same machine, and can switch between different environments, which is very convenient. Because the project source code is relatively old, it is necessary to use conda to create a python virtual environment.</p>
+<p>Download address: <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/</a>, download version: 3-5.2.0-windows-x86_64.exe</p>
+<p><strong>6 Create a virtual environment</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda create -n your_env_name python=x.x   <span class="comment"># Use conda to create a virtual environment</span></span><br><span class="line">activate your_env_name   <span class="comment">#Activate the virtual environment</span></span><br><span class="line">pip install -r requirements.txt   <span class="comment">#Install libraries in batches according to the dependency file, txt file is attached</span></span><br></pre></td></tr></table></figure>
+<p><strong>7 Modify the path of Windows environment variables</strong></p>
+<p>Add conda, CUDA10, VS2017, etc. to PATH.</p>
+<p><strong>8 Run the program</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python run_generator.py generate-images --network=gdrive:networks/stylegan2-ffhq-config-f.pkl --seeds=<span class="number">6600</span>-<span class="number">6625</span> --truncation-psi=<span class="number">0.5</span></span><br></pre></td></tr></table></figure>
+<p>You can see the results in the ./results/ folder.</p>
+<h3><span id="environment-deployment-on-the-second-computer">Environment Deployment on the Second Computer</span></h3><p>The key is that the versions of Python, PyTorch, CUDA, and Visual Studio need to match. Many previous failures were due to version mismatches.</p>
+<p>When deploying the StyleGAN project on a computer with an RTX3070 graphics card, frequent problems were encountered. It was found that many projects on GitHub use TensorFlow1.x, these versions only support up to CUDA10, but RTX3070 only supports CUDA11 and above. The version issues between TensorFlow1 and 2 are quite troublesome, so it was decided to switch to using PyTorch.</p>
+<p>Referencing the GitHub source code: <a target="_blank" rel="noopener" href="https://github.com/johnhany/stylegan2-pytorch">https://github.com/johnhany/stylegan2-pytorch</a></p>
+<p>Computer used: Windows 10, Graphics card: NVDIA GeForce RTX 3070</p>
+<p>Python version: 3.7.10</p>
+<p>Packages used: See the attached requirments2.txt file.</p>
+<p>Basic steps: Get the project source code from GitHub, install VS2019 (2019 version), install CUDA11.1 and cuDNN8.0.4, create a virtual environment, modify the path of Windows environment variables, pip install the needed packages, put the images in the specified path ./images/, run:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stylegan2_pytorch --data ./images/ --num_workers=0</span><br></pre></td></tr></table></figure>
+<p>Afterwards, you can see the results in the ./results/ folder.</p>
+<p><strong>See the result1 and result2 folders for the respective running results.</strong></p>
+<h2><span id="iv-result-presentation">IV: Result Presentation</span></h2><p>A selection of the final generated images is shown below, some of which can achieve a very realistic effect.</p>
+<center class="half">
+<img src="/images/gan1.jpg" width="60%"> <img src="/images/gan2.jpg" width="60%"> 
+</center>
+
+
+<h2><span id="v-further-discussion-on-gan">V: Further Discussion on GAN</span></h2><h3><span id="advantages-of-gan">Advantages of GAN</span></h3><p>The core idea of GAN is based on “indirect” training through a discriminator, which is also dynamically updated. Basically, this means that the generator is not trained to minimize the distance to a specific image, but to deceive the discriminator, allowing the model to learn in an unsupervised manner. GAN is an implicit generative model, which means they do not explicitly model the likelihood function.<br>Although GAN was initially proposed as an unsupervised learning generative model, it has been proven that GAN is also applicable to semi-supervised learning, fully supervised learning, and reinforcement learning.<br>It can better model data distribution (sharper and clearer images).<br>In theory, GANs can train any type of generator network. Other frameworks require the generator network to have some specific function forms, such as Gaussian output layers.</p>
+<h3><span id="disadvantages-of-gan">Disadvantages of GAN</span></h3><p>No need to use Markov chains for repeated sampling, no inference during the learning process, no complex variational lower bounds, avoiding the tricky problem of approximating probabilities.<br>Difficult to train, unstable. Good synchronization is needed between the generator and discriminator, but in actual training, it is easy for D to converge and G to diverge. The training of D/G needs careful design.<br>Mode collapse problem. The learning process of GANs may experience mode collapse, where the generator begins to degenerate, always generating the same sample points, and cannot continue to learn.</p>
+<h3><span id="applications-of-gan">Applications of GAN</span></h3><ol>
+<li><p>GAN can be used to generate artistic images, GAN can also be used to repair photos, or create photos for imaginary fashion models;</p>
+</li>
+<li><p>GAN can be used to generate astronomical images, simulating the gravitational lensing effect in dark matter research;</p>
+</li>
+<li><p>GAN is a method to quickly and accurately simulate the formation of high-energy jets and cluster emission through calorimeters in high-energy physics experiments;</p>
+</li>
+<li><p>In the field of video games, GAN trains high-resolution 4k images based on low-resolution 2D images, and then samples according to the resolution of the original image 1, which can make the original image clearer, obtain clearer textures, and at the same time not lose the color and details of the original image.</p>
+</li>
+<li><p>In the field of transfer learning, the most advanced transfer learning research uses GAN to enhance the alignment of the latent feature space, such as in deep reinforcement learning.</p>
+</li>
+<li><p>Other applications, GAN can reconstruct the three-dimensional model of objects from the motion model patterns in images and videos, can be used to display the appearance of people with age changes; a GAN model - Speech2Face can rebuild its appearance through people’s voices; GAN can also process time-series data, for example, recurrent GANs can generate energy data for machine learning.</p>
+</li>
+</ol>
+<h3><span id="concerns-raised-by-gan-harm">Concerns Raised by GAN (Harm)</span></h3><p>There are potential risks that GAN may be used for photos and videos that may lead to crimes, create fake profiles, generate explicit videos using image synthesis technology, etc.</p>
+<h2><span id="vi-summary-of-this-project">VI: Summary of This Project</span></h2><p>This article uses StyleGAN to generate images based on the anime images crawled from the Pixiv website, then extracts the face images from the images, and generates new anime images through Style-GAN. Similar to generating non-existent face photos based on a large number of real face photos, through multiple training, it can completely achieve a very realistic effect. However, due to equipment reasons (the GPU performance is not high and only a single GPU is used), the code running time is too long. It can be expected that in the future, as the amount of data increases, it will inevitably drive the improvement of computing power, forming a positive cycle. At the same time, it also means that human privacy will be less and less, and information such as faces and voices will be stored as data.</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Image Generator: Application and Implementation of StyleGAN</p><p><a href="http://example.com/2023/09/27/Image-Generator-Application-and-Implementation-of-StyleGAN-1/">http://example.com/2023/09/27/Image-Generator-Application-and-Implementation-of-StyleGAN-1/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Yuzi Liang</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2023-09-27</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2023-09-27</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Machine-Learning/">Machine Learning</a><a class="link-muted mr-2" rel="tag" href="/tags/Web-Crawler/">Web Crawler</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/04/11/CNN-with-Pytorch/"><span class="level-item">CNN with Pytorch</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://example.com/2023/09/27/Image-Generator-Application-and-Implementation-of-StyleGAN-1/';
+            this.page.identifier = '2023/09/27/Image-Generator-Application-and-Implementation-of-StyleGAN-1/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'lyz' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-09-28T00:13:37.000Z">2023-09-27</time></p><p class="title"><a href="/2023/09/27/Image-Generator-Application-and-Implementation-of-StyleGAN-1/">Image Generator: Application and Implementation of StyleGAN</a></p><p class="categories"><a href="/categories/Project-Summary/">Project Summary</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-04-11T22:35:16.000Z">2023-04-11</time></p><p class="title"><a href="/2023/04/11/CNN-with-Pytorch/">CNN with Pytorch</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-04-04T04:22:22.000Z">2023-04-03</time></p><p class="title"><a href="/2023/04/03/Diffusion-model/">Diffusion model</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-11-08T02:10:30.000Z">2022-11-07</time></p><p class="title"><a href="/2022/11/07/TensorFlow-Tutorial/">TensorFlow Tutorial</a></p><p class="categories"><a href="/categories/Learning-Notes/">Learning Notes</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-28T22:58:52.000Z">2022-05-28</time></p><p class="title"><a href="/2022/05/28/Lattice-Boltzmann-Method/">Lattice Boltzmann Method</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Demo/"><span class="level-start"><span class="level-item">Demo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Learning-Notes/"><span class="level-start"><span class="level-item">Learning Notes</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/Project-Summary/"><span class="level-start"><span class="level-item">Project Summary</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Machine-Learning/"><span class="tag">Machine Learning</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Magnetics/"><span class="tag">Magnetics</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Monte-Carlo-Method/"><span class="tag">Monte Carlo Method</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PyTorch/"><span class="tag">PyTorch</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Selenium/"><span class="tag">Selenium</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TensorFlow/"><span class="tag">TensorFlow</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Thermoelectricity/"><span class="tag">Thermoelectricity</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Web-Crawler/"><span class="tag">Web Crawler</span><span class="tag">3</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/ustc_logo.jpg" alt="Yuzi Liang | University of Science and Technology of China" height="28"></a><p class="is-size-7"><span>&copy; 2023 Yuzi Liang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
